@@ -69,20 +69,20 @@ export default function AdmissionsPage() {
                                     </h3>
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">First Name *</label>
-                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Student First Name" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">First Name *</label>
+                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Student First Name" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Last Name *</label>
-                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Student Last Name" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Last Name *</label>
+                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Student Last Name" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Date of Birth *</label>
-                                            <input type="date" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Date of Birth *</label>
+                                            <input type="date" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Gender *</label>
-                                            <select required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Gender *</label>
+                                            <select required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
                                                 <option value="">Select Gender</option>
                                                 <option>Male</option>
                                                 <option>Female</option>
@@ -104,8 +104,8 @@ export default function AdmissionsPage() {
                                     </h3>
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="md:col-span-2">
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Admission Sought For Class *</label>
-                                            <select required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Admission Sought For Class *</label>
+                                            <select required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
                                                 <option value="">-- Select Class --</option>
                                                 <option>Nursery</option>
                                                 <option>LKG</option>
@@ -119,12 +119,12 @@ export default function AdmissionsPage() {
                                             </select>
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Previous School Name</label>
-                                            <input type="text" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Name of last school" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Previous School Name</label>
+                                            <input type="text" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Name of last school" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Last Grade / Percentage</label>
-                                            <input type="text" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="e.g. 85%" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Last Grade / Percentage</label>
+                                            <input type="text" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="e.g. 85%" />
                                         </div>
                                     </div>
                                     <div className="mt-8 flex justify-between">
@@ -145,20 +145,20 @@ export default function AdmissionsPage() {
                                     </h3>
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Father&apos;s Name *</label>
-                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Father&apos;s Name *</label>
+                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Mobile Number *</label>
-                                            <input type="tel" required pattern="[0-9]{10}" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="10 Digit Number" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Mobile Number *</label>
+                                            <input type="tel" required pattern="[0-9]{10}" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="10 Digit Number" />
                                         </div>
                                         <div className="md:col-span-2">
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Email Address</label>
-                                            <input type="email" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="parent@example.com" />
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Email Address</label>
+                                            <input type="email" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="parent@example.com" />
                                         </div>
                                         <div className="md:col-span-2">
-                                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">Residential Address</label>
-                                            <textarea rows="2" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all"></textarea>
+                                            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Residential Address</label>
+                                            <textarea rows="2" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all"></textarea>
                                         </div>
                                     </div>
 
