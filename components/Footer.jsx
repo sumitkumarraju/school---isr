@@ -24,7 +24,7 @@ export default function Footer() {
                 <div>
                     <h3 className="font-bold mb-4 text-iis-cream">Connect</h3>
                     <p className="text-sm text-slate-400 mb-2">9996390013</p>
-                    <p className="text-sm text-slate-400">admin@iisgohana.com</p>
+                    <a href="mailto:admin@iisgohana.com" className="text-sm text-slate-400 hover:text-white transition-colors block">admin@iisgohana.com</a>
                 </div>
             </div>
             <div className="border-t border-slate-700 pt-8 text-center text-xs text-slate-500">

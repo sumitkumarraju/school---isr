@@ -9,7 +9,7 @@ export default function AboutPage() {
             {/* Page Header */}
             <div className="bg-iis-navy text-white py-16 text-center">
                 <h1 className="font-serif text-4xl font-bold">About Us</h1>
-                <p className="text-slate-300 mt-2">Discover our legacy, mission, and leadership.</p>
+                <p className="text-slate-200 mt-2">Discover our legacy, mission, and leadership.</p>
             </div>
 
             <section className="py-20 bg-white">
@@ -75,8 +75,8 @@ export default function AboutPage() {
                         <button
                             onClick={() => setActiveTab('principal')}
                             className={`px-8 py-3 font-bold text-lg border-b-4 transition-all duration-300 rounded-t-lg flex items-center ${activeTab === 'principal'
-                                    ? 'border-iis-maroon text-iis-maroon bg-white shadow-md'
-                                    : 'border-transparent text-slate-500 bg-slate-100 hover:border-iis-gold'
+                                ? 'border-iis-maroon text-iis-maroon bg-white shadow-md'
+                                : 'border-transparent text-slate-500 bg-slate-100 hover:border-iis-gold'
                                 }`}
                         >
                             <i className="fa-solid fa-user-tie mr-2"></i>Principal
@@ -84,8 +84,8 @@ export default function AboutPage() {
                         <button
                             onClick={() => setActiveTab('director')}
                             className={`px-8 py-3 font-bold text-lg border-b-4 transition-all duration-300 rounded-t-lg flex items-center ${activeTab === 'director'
-                                    ? 'border-iis-maroon text-iis-maroon bg-white shadow-md'
-                                    : 'border-transparent text-slate-500 bg-slate-100 hover:border-iis-gold'
+                                ? 'border-iis-maroon text-iis-maroon bg-white shadow-md'
+                                : 'border-transparent text-slate-500 bg-slate-100 hover:border-iis-gold'
                                 }`}
                         >
                             <i className="fa-solid fa-user-tie mr-2"></i>Director
@@ -101,7 +101,7 @@ export default function AboutPage() {
                                         <img src="/principla.jpg" className="w-full h-full object-cover" alt="Mrs. Usha Kaushik" />
                                     </div>
                                     <h3 className="font-serif text-2xl font-bold text-iis-maroon">Mrs. Usha Kaushik</h3>
-                                    <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">Principal</p>
+                                    <p className="text-sm font-bold text-slate-700 uppercase tracking-widest">Principal</p>
                                 </div>
 
                                 <div className="w-full md:w-2/3">
@@ -139,11 +139,9 @@ export default function AboutPage() {
                         <div className="message-container animate-fade-in-up">
                             <div className="flex flex-col md:flex-row gap-12 items-start">
                                 <div className="w-full md:w-1/3 flex flex-col items-center sticky top-20">
-                                    <div className="relative w-full aspect-[3/4] rounded-sm overflow-hidden shadow-xl border-8 border-white mb-4">
-                                        <img src="/DIRRECCTOR.jpg" className="w-full h-full object-cover" alt="Mr. Anil Malik" />
-                                    </div>
-                                    <h3 className="font-serif text-2xl font-bold text-iis-maroon">Mr. Anil Malik</h3>
-                                    <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">Director</p>
+                                    {/* Photo Removed */}
+                                    <h3 className="font-serif text-2xl font-bold text-iis-maroon">Mrs. Mukesh Malik</h3>
+                                    <p className="text-sm font-bold text-slate-700 uppercase tracking-widest">Director</p>
                                 </div>
 
                                 <div className="w-full md:w-2/3">

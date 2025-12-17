@@ -1,11 +1,14 @@
 import React from 'react';
 
 const images = [
-    "BHARATI.jpeg", "BHWANA.jpeg", "DEEIPKA.jpeg", "DIRRECCTOR.jpg",
-    "JYOTI.jpeg", "KAMLESH.jpg", "LALIT.jpg", "MAMTA.jpeg",
-    "MANJOT.jpg", "MANJU.jpeg", "me.jpg", "MEENA.jpg",
-    "NIGHI.jpeg", "NISITA.jpeg", "principla.jpg", "PRITI.jpg",
-    "PRIYUANKA.jpeg", "RAVINDER.jpg", "ROHIT.jpeg", "SHYAM.jpg", "SUMAN.jpg"
+    "gallery/DSCN0070.JPG", "gallery/DSCN0116.JPG", "gallery/DSCN0187.JPG",
+    "gallery/DSCN0194.JPG", "gallery/DSCN0275.JPG", "gallery/DSCN0320.JPG",
+    "gallery/DSCN1230.JPG", "gallery/DSCN1307.JPG", "gallery/DSCN1429.JPG",
+    "gallery/DSCN1615.JPG", "gallery/DSCN2573.JPG", "gallery/DSCN2579.JPG",
+    "gallery/DSCN2658.JPG", "gallery/DSCN2703.JPG", "gallery/DSC_1457.JPG",
+    "gallery/DSC_1461.JPG", "gallery/DSC_2957.JPG",
+    "gallery/WhatsApp Image 2019-06-01 at 12.11.48 PM.jpeg",
+    "gallery/WhatsApp Image 2022-08-31 at 4.25.45 PM.jpeg"
 ];
 
 export default function GalleryPage() {

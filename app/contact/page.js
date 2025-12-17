@@ -1,4 +1,6 @@
 import React from 'react';
+import EnquiryForm from '@/components/EnquiryForm';
+
 
 export default function ContactPage() {
     return (
@@ -9,8 +11,9 @@ export default function ContactPage() {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 mt-12">
-                <div className="grid md:grid-cols-2 gap-12">
-                    <div className="bg-white p-8 rounded-sm shadow-sm border border-gray-200">
+                <div className="grid md:grid-cols-2 gap-12 mb-12">
+                    {/* Contact Information */}
+                    <div className="bg-white p-8 rounded-sm shadow-sm border border-gray-200 h-full">
                         <h3 className="font-serif text-2xl mb-6 text-slate-800">Get in Touch</h3>
                         <div className="space-y-6">
                             <div className="flex items-start gap-4">
@@ -37,20 +40,23 @@ export default function ContactPage() {
                         </div>
                     </div>
 
+                    {/* Enquiry Form */}
+                    <EnquiryForm />
+                </div>
 
-                    <div className="h-96 bg-gray-200 rounded-sm overflow-hidden shadow-lg border border-gray-200">
-                        <iframe
-                            title="Ishwar International School Map"
-                            width="100%"
-                            height="100%"
-                            id="gmap_canvas"
-                            src="https://maps.google.com/maps?q=Ishwar+International+School+Gohana+Haryana&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            frameBorder="0"
-                            scrolling="no"
-                            marginHeight="0"
-                            marginWidth="0">
-                        </iframe>
-                    </div>
+                {/* Map Section */}
+                <div className="h-96 bg-gray-200 rounded-sm overflow-hidden shadow-lg border border-gray-200">
+                    <iframe
+                        title="Ishwar International School Map"
+                        width="100%"
+                        height="100%"
+                        id="gmap_canvas"
+                        src="https://maps.google.com/maps?q=Ishwar+International+School+Gohana+Haryana&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        frameBorder="0"
+                        scrolling="no"
+                        marginHeight="0"
+                        marginWidth="0">
+                    </iframe>
                 </div>
             </div>
         </div>

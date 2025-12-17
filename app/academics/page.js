@@ -6,7 +6,7 @@ export default function AcademicsPage() {
         <div className="bg-slate-50 min-h-screen pb-20">
             <div className="bg-iis-navy text-white py-16 text-center">
                 <h1 className="font-serif text-4xl font-bold">Academics</h1>
-                <p className="text-slate-300 mt-2">Curriculum, Faculty, and Scholarships.</p>
+                <p className="text-slate-200 mt-2">Curriculum, Faculty, and Scholarships.</p>
             </div>
 
             <section id="curriculum" className="py-20 bg-white">

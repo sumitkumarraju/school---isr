@@ -28,7 +28,7 @@ export default function FeesPage() {
                         <div className="p-6 text-sm">
                             <div className="flex justify-between py-2 border-b border-gray-100">
                                 <span className="text-slate-600">Admission Charge (New)</span>
-                                <span className="font-bold text-slate-800">₹ 2,500</span>
+                                <span className="font-bold text-iis-maroon">₹ 2,500</span>
                             </div>
 
                             <div className="grid grid-cols-3 gap-2 mt-4 mb-2 text-xs font-bold text-iis-maroon uppercase">
@@ -38,19 +38,19 @@ export default function FeesPage() {
                             </div>
 
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">Nursery</span>
-                                <span className="text-right">₹ 1,950</span>
-                                <span className="text-right">₹ 1,950</span>
+                                <span className="font-bold text-iis-navy">Nursery</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 1,950</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 1,950</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">L.K.G.</span>
-                                <span className="text-right">₹ 2,650</span>
-                                <span className="text-right">₹ 2,450</span>
+                                <span className="font-bold text-iis-navy">L.K.G.</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,650</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,450</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">U.K.G.</span>
-                                <span className="text-right">₹ 2,650</span>
-                                <span className="text-right">₹ 2,450</span>
+                                <span className="font-bold text-iis-navy">U.K.G.</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,650</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,450</span>
                             </div>
 
                             <button className="w-full mt-6 bg-iis-navy text-white py-2 rounded-sm text-xs font-bold uppercase hover:bg-slate-700">Pay Nursery-UKG Fees</button>
@@ -66,39 +66,39 @@ export default function FeesPage() {
                         <div className="p-6 text-sm">
                             <div className="flex justify-between py-2 border-b border-gray-100">
                                 <span className="text-slate-600">Admission Charge (New)</span>
-                                <span className="font-bold text-slate-800">₹ 2,500</span>
+                                <span className="font-bold text-iis-maroon">₹ 2,500</span>
                             </div>
 
                             <div className="grid grid-cols-3 gap-2 mt-4 mb-2 text-xs font-bold text-iis-maroon uppercase">
                                 <span>Class</span>
-                                <span className="text-right">1st Child</span>
-                                <span className="text-right">2nd Child</span>
+                                <span className="text-right font-bold text-iis-maroon">1st Child</span>
+                                <span className="text-right font-bold text-iis-maroon">2nd Child</span>
                             </div>
 
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">1st</span>
-                                <span className="text-right">₹ 2,900</span>
-                                <span className="text-right">₹ 2,700</span>
+                                <span className="font-bold text-iis-navy">1st</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,900</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,700</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">2nd</span>
-                                <span className="text-right">₹ 2,900</span>
-                                <span className="text-right">₹ 2,700</span>
+                                <span className="font-bold text-iis-navy">2nd</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,900</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 2,700</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">3rd</span>
-                                <span className="text-right">₹ 3,250</span>
-                                <span className="text-right">₹ 3,000</span>
+                                <span className="font-bold text-iis-navy">3rd</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,250</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,000</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">4th</span>
-                                <span className="text-right">₹ 3,250</span>
-                                <span className="text-right">₹ 3,000</span>
+                                <span className="font-bold text-iis-navy">4th</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,250</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,000</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">5th</span>
-                                <span className="text-right">₹ 3,250</span>
-                                <span className="text-right">₹ 3,000</span>
+                                <span className="font-bold text-iis-navy">5th</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,250</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,000</span>
                             </div>
 
                             <button className="w-full mt-6 bg-iis-navy text-white py-2 rounded-sm text-xs font-bold uppercase hover:bg-slate-700">Pay Primary Fees</button>
@@ -114,34 +114,34 @@ export default function FeesPage() {
                         <div className="p-6 text-sm">
                             <div className="flex justify-between py-2 border-b border-gray-100">
                                 <span className="text-slate-600">Admission Charge (New)</span>
-                                <span className="font-bold text-slate-800">₹ 3,500</span>
+                                <span className="font-bold text-iis-maroon">₹ 3,500</span>
                             </div>
 
                             <div className="grid grid-cols-3 gap-2 mt-4 mb-2 text-xs font-bold text-iis-maroon uppercase">
                                 <span>Class</span>
-                                <span className="text-right">1st Child</span>
-                                <span className="text-right">2nd Child</span>
+                                <span className="text-right font-bold text-iis-maroon">1st Child</span>
+                                <span className="text-right font-bold text-iis-maroon">2nd Child</span>
                             </div>
 
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">6th - 8th</span>
-                                <span className="text-right">₹ 3,750</span>
-                                <span className="text-right">₹ 3,400</span>
+                                <span className="font-bold text-iis-navy">6th - 8th</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,750</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,400</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold">9th - 10th</span>
-                                <span className="text-right">₹ 4,300</span>
-                                <span className="text-right">₹ 3,950</span>
+                                <span className="font-bold text-iis-navy">9th - 10th</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 4,300</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 3,950</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold text-[10px] leading-tight">11th/12th<br />(Commerce)</span>
-                                <span className="text-right">₹ 4,950</span>
-                                <span className="text-right">₹ 4,500</span>
+                                <span className="font-bold text-iis-navy text-[10px] leading-tight">11th/12th<br />(Commerce)</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 4,950</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 4,500</span>
                             </div>
                             <div className="grid grid-cols-3 gap-2 py-2 border-b border-gray-50">
-                                <span className="font-bold text-[10px] leading-tight">11th/12th<br />(Science)</span>
-                                <span className="text-right">₹ 5,150</span>
-                                <span className="text-right">₹ 4,700</span>
+                                <span className="font-bold text-iis-navy text-[10px] leading-tight">11th/12th<br />(Science)</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 5,150</span>
+                                <span className="text-right font-bold text-iis-maroon">₹ 4,700</span>
                             </div>
 
                             <button className="w-full mt-6 bg-iis-navy text-white py-2 rounded-sm text-xs font-bold uppercase hover:bg-slate-700">Pay Senior Fees</button>
