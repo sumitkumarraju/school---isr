@@ -1,6 +1,11 @@
 import React from 'react';
 import FacultyCard from '@/components/FacultyCard';
 
+export const metadata = {
+    title: 'Academics',
+    description: 'Explore our CBSE curriculum, holistic education approach, and state-of-the-art laboratories designed for experiential learning.',
+};
+
 export default function AcademicsPage() {
     // Verified images from public folder
     const facultyMembers = [

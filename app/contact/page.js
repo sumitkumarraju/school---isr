@@ -2,6 +2,11 @@ import React from 'react';
 import EnquiryForm from '@/components/EnquiryForm';
 
 
+export const metadata = {
+    title: 'Contact Us',
+    description: 'Get in touch with Ishwar International School. Address: Sonipat Bypass Rd, Gohana. Phone: 9996390013.',
+};
+
 export default function ContactPage() {
     return (
         <div className="bg-slate-50 min-h-screen pb-20">

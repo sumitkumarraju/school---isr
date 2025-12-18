@@ -11,6 +11,11 @@ const images = [
     "gallery/WhatsApp Image 2022-08-31 at 4.25.45 PM.jpeg"
 ];
 
+export const metadata = {
+    title: 'Gallery',
+    description: 'Glimpses of life at Ishwar International School - Campus, Events, Sports, and Cultural Activities.',
+};
+
 export default function GalleryPage() {
     return (
         <div className="bg-slate-50 min-h-screen pb-20">

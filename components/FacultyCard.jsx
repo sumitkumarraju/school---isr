@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function FacultyCard({ name, role, image, className = "", imageClassName = "h-60" }) {
     const cardRef = useRef(null);
@@ -43,12 +44,13 @@ export default function FacultyCard({ name, role, image, className = "", imageCl
                     <h3 className="text-xl font-bold text-iis-maroon font-serif">{name}</h3>
                     <p className="text-slate-500 text-sm max-w-sm mt-2 font-medium uppercase tracking-wider">{role}</p>
                 </div>
-                <div className="w-full mt-6" style={{ transform: 'translateZ(60px)' }}>
-                    {/* Using standard img tag for simplicity with local files in public folder */}
-                    <img
+                <div className={`w-full relative mt-6 ${imageClassName}`} style={{ transform: 'translateZ(60px)' }}>
+                    <Image
                         src={image}
-                        className={`w-full object-cover rounded-xl shadow-lg pointer-events-none ${imageClassName}`}
                         alt={name}
+                        fill
+                        className="object-cover rounded-xl shadow-lg pointer-events-none"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </div>
             </div>

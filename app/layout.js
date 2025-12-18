@@ -14,8 +14,39 @@ const playfair = Playfair_Display({
 });
 
 export const metadata = {
-  title: "Ishwar International School | Gohana",
-  description: "Ishwar International School, Affiliated to C.B.S.E, is a community of learners.",
+  metadataBase: new URL('https://ishwarinternationalschool.com'),
+  title: {
+    default: 'Ishwar International School | Best CBSE School in Gohana',
+    template: '%s | Ishwar International School',
+  },
+  description: 'Ishwar International School is a premier CBSE-affiliated institution in Gohana, focused on holistic development, academic excellence, and ethical values.',
+  keywords: ['Ishwar International School', 'CBSE School Gohana', 'Best School in Gohana', 'Holistic Education', 'K12 School', 'Sonepat Road School'],
+  openGraph: {
+    title: 'Ishwar International School',
+    description: 'Nurturing energy, excellence, and evolution in every student.',
+    url: 'https://ishwarinternationalschool.com',
+    siteName: 'Ishwar International School',
+    images: [
+      {
+        url: '/building.png',
+        width: 1200,
+        height: 630,
+        alt: 'Ishwar International School Campus',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ishwar International School',
+    description: 'Premier CBSE School in Gohana.',
+    images: ['/building.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {
