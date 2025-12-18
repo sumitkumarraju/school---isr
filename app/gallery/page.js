@@ -15,25 +15,26 @@ export default function GalleryPage() {
     return (
         <div className="bg-slate-50 min-h-screen pb-20">
             <div className="bg-iis-maroon text-white py-16 text-center">
-                <h1 className="font-serif text-4xl font-bold">Gallery</h1>
-                <p className="text-red-100 mt-2">Glimpses of life at Ishwar International School.</p>
+                <h1 className="font-serif text-4xl font-bold animate-fade-in-up">Gallery</h1>
+                <p className="text-red-100 mt-2 animate-fade-in-up delay-100">Glimpses of life at Ishwar International School.</p>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 mt-12">
-
-                <div className="columns-1 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                     {images.map((img, index) => (
-                        <div key={index} className="break-inside-avoid relative group rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                        <div key={index} className="break-inside-avoid relative group rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-gray-200">
                             <img
                                 src={`/${img}`}
                                 alt={`Gallery Image ${index + 1}`}
-                                className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
                             />
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                                <p className="text-white text-sm font-medium">View Image</p>
+                            </div>
                         </div>
                     ))}
                 </div>
-
             </div>
         </div>
     );

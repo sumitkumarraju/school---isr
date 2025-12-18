@@ -198,7 +198,9 @@ export default function Home() {
             {/* Director */}
             <div className="flex flex-col md:flex-row-reverse gap-10 items-start">
               <div className="w-full md:w-1/3 bg-slate-100 p-6 rounded-lg text-center">
-                {/* Photo Removed */}
+                <div className="w-48 h-56 mx-auto mb-4 overflow-hidden rounded-lg shadow-md">
+                  <img src="/DIRECTOR WOMEN.jpeg" className="w-full h-full object-cover" alt="Mrs. Mukesh Malik" />
+                </div>
                 <h3 className="font-serif text-2xl font-bold text-iis-maroon">Mrs. Mukesh Malik</h3>
                 <p className="text-iis-gold font-bold uppercase tracking-wide text-sm">Director</p>
               </div>

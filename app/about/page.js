@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 
+import FacultyCard from "@/components/FacultyCard";
+
 export default function AboutPage() {
     const [activeTab, setActiveTab] = useState('principal');
 
@@ -97,11 +99,14 @@ export default function AboutPage() {
                         <div className="message-container animate-fade-in-up">
                             <div className="flex flex-col md:flex-row gap-12 items-start">
                                 <div className="w-full md:w-1/3 flex flex-col items-center sticky top-20">
-                                    <div className="relative w-full aspect-[3/4] rounded-sm overflow-hidden shadow-xl border-8 border-white mb-4">
-                                        <img src="/principla.jpg" className="w-full h-full object-cover" alt="Mrs. Usha Kaushik" />
+                                    <div className="w-full max-w-sm">
+                                        <FacultyCard
+                                            name="Mrs. Usha Kaushik"
+                                            role="Principal"
+                                            image="/principla.jpg"
+                                            imageClassName="aspect-[3/4] object-cover h-auto"
+                                        />
                                     </div>
-                                    <h3 className="font-serif text-2xl font-bold text-iis-maroon">Mrs. Usha Kaushik</h3>
-                                    <p className="text-sm font-bold text-slate-700 uppercase tracking-widest">Principal</p>
                                 </div>
 
                                 <div className="w-full md:w-2/3">
@@ -139,9 +144,14 @@ export default function AboutPage() {
                         <div className="message-container animate-fade-in-up">
                             <div className="flex flex-col md:flex-row gap-12 items-start">
                                 <div className="w-full md:w-1/3 flex flex-col items-center sticky top-20">
-                                    {/* Photo Removed */}
-                                    <h3 className="font-serif text-2xl font-bold text-iis-maroon">Mrs. Mukesh Malik</h3>
-                                    <p className="text-sm font-bold text-slate-700 uppercase tracking-widest">Director</p>
+                                    <div className="w-full max-w-sm">
+                                        <FacultyCard
+                                            name="Mrs. Mukesh Malik"
+                                            role="Director"
+                                            image="/DIRECTOR WOMEN.jpeg"
+                                            imageClassName="aspect-[3/4] object-cover h-auto"
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className="w-full md:w-2/3">
