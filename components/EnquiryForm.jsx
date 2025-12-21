@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function EnquiryForm() {
     const [loading, setLoading] = useState(false);
@@ -18,21 +19,17 @@ export default function EnquiryForm() {
         };
 
         try {
-            const res = await fetch("/api/enquiry", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
+            const { error } = await supabase
+                .from('enquiries')
+                .insert([formData]);
 
-            const result = await res.json();
-
-            if (result.success) {
+            if (!error) {
                 setStatus('success');
                 e.target.reset();
                 alert("Enquiry submitted successfully! Check your email for confirmation.");
             } else {
                 setStatus('error');
-                alert("Something went wrong: " + result.message);
+                alert("Something went wrong: " + error.message);
             }
         } catch (err) {
             console.error(err);

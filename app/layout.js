@@ -4,13 +4,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 const playfair = Playfair_Display({
-  variable: "--font-playfair",
   subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
 });
 
 export const metadata = {
@@ -49,21 +51,24 @@ export const metadata = {
   },
 };
 
+import Script from "next/script";
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" async strategy="afterInteractive"></script>
-      </head>
-      <body
-        className={`${inter.variable} ${playfair.variable} antialiased font-sans text-slate-800 bg-white`}
-      >
+    <html
+      lang="en"
+      className={`${inter.variable} ${playfair.variable} scroll-smooth`}
+    >
+      <body className="antialiased font-sans text-slate-800 bg-white">
         <Navbar />
         <main className="min-h-screen">
           {children}
         </main>
         <Footer />
+        <Script
+          src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

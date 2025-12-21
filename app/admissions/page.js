@@ -1,16 +1,25 @@
 "use client";
 import React, { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function AdmissionsPage() {
     const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '', lastName: '', dob: '', gender: '',
+        classApplyingFor: '', previousSchool: '', lastGradePercentage: '',
+        fatherName: '', mobile: '', email: '', address: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleNext = (e) => {
         e.preventDefault();
-        // Validate inputs here if needed
+        // Basic validation can be added here
         setCurrentStep((prev) => prev + 1);
         const formElement = document.getElementById('admission-form');
-        // Scroll to top of form
         if (formElement) formElement.scrollIntoView({ behavior: 'smooth' });
     };
 
@@ -19,10 +28,43 @@ export default function AdmissionsPage() {
         setCurrentStep((prev) => prev - 1);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Inquiry Sent! We have received your details. Our admission counselor will call you shortly.");
-        // In a real app, you would send data to a server here.
+        setSubmitting(true);
+
+        try {
+            const { error } = await supabase.from('admissions').insert({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                dob: formData.dob,
+                gender: formData.gender,
+                class_applying_for: formData.classApplyingFor,
+                previous_school: formData.previousSchool,
+                last_grade_percentage: formData.lastGradePercentage,
+                father_name: formData.fatherName,
+                mobile: formData.mobile, // Mapped to 'mobile' in SQL as well based on my setup, or 'parent_phone'? In my SQL I put 'mobile'. Let me double check SQL.
+                // SQL said 'mobile text not null' in Step 69.
+                email: formData.email,
+                address: formData.address,
+            });
+
+            if (!error) {
+                alert("Application Submitted Successfully! Our admission counselor will call you shortly.");
+                setFormData({
+                    firstName: '', lastName: '', dob: '', gender: '',
+                    classApplyingFor: '', previousSchool: '', lastGradePercentage: '',
+                    fatherName: '', mobile: '', email: '', address: ''
+                });
+                setCurrentStep(1);
+            } else {
+                throw error;
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Submission failed: " + error.message);
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -70,22 +112,22 @@ export default function AdmissionsPage() {
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">First Name *</label>
-                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Student First Name" />
+                                            <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Last Name *</label>
-                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Student Last Name" />
+                                            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Date of Birth *</label>
-                                            <input type="date" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
+                                            <input type="date" name="dob" value={formData.dob} onChange={handleChange} required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Gender *</label>
-                                            <select required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
+                                            <select name="gender" value={formData.gender} onChange={handleChange} required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
                                                 <option value="">Select Gender</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                             </select>
                                         </div>
                                     </div>
@@ -105,26 +147,36 @@ export default function AdmissionsPage() {
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="md:col-span-2">
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Admission Sought For Class *</label>
-                                            <select required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
+                                            <select name="classApplyingFor" value={formData.classApplyingFor} onChange={handleChange} required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all">
                                                 <option value="">-- Select Class --</option>
-                                                <option>Nursery</option>
-                                                <option>LKG</option>
-                                                <option>UKG</option>
-                                                <option>Class 1 - 5</option>
-                                                <option>Class 6 - 8</option>
-                                                <option>Class 9 - 10</option>
-                                                <option>Class 11 - 12 (Science)</option>
-                                                <option>Class 11 - 12 (Commerce)</option>
-                                                <option>Class 11 - 12 (Arts)</option>
+                                                <option value="Nursery">Nursery</option>
+                                                <option value="LKG">LKG</option>
+                                                <option value="UKG">UKG</option>
+                                                <option value="Class 1">Class 1</option>
+                                                <option value="Class 2">Class 2</option>
+                                                <option value="Class 3">Class 3</option>
+                                                <option value="Class 4">Class 4</option>
+                                                <option value="Class 5">Class 5</option>
+                                                <option value="Class 6">Class 6</option>
+                                                <option value="Class 7">Class 7</option>
+                                                <option value="Class 8">Class 8</option>
+                                                <option value="Class 9">Class 9</option>
+                                                <option value="Class 10">Class 10</option>
+                                                <option value="Class 11 Science">Class 11 - Science</option>
+                                                <option value="Class 11 Commerce">Class 11 - Commerce</option>
+                                                <option value="Class 11 Arts">Class 11 - Arts</option>
+                                                <option value="Class 12 Science">Class 12 - Science</option>
+                                                <option value="Class 12 Commerce">Class 12 - Commerce</option>
+                                                <option value="Class 12 Arts">Class 12 - Arts</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Previous School Name</label>
-                                            <input type="text" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Name of last school" />
+                                            <input type="text" name="previousSchool" value={formData.previousSchool} onChange={handleChange} className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="Name of last school" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Last Grade / Percentage</label>
-                                            <input type="text" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="e.g. 85%" />
+                                            <input type="text" name="lastGradePercentage" value={formData.lastGradePercentage} onChange={handleChange} className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="e.g. 85%" />
                                         </div>
                                     </div>
                                     <div className="mt-8 flex justify-between">
@@ -146,19 +198,19 @@ export default function AdmissionsPage() {
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Father&apos;s Name *</label>
-                                            <input type="text" required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
+                                            <input type="text" name="fatherName" value={formData.fatherName} onChange={handleChange} required className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Mobile Number *</label>
-                                            <input type="tel" required pattern="[0-9]{10}" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="10 Digit Number" />
+                                            <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} required pattern="[0-9]{10}" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="10 Digit Number" />
                                         </div>
                                         <div className="md:col-span-2">
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Email Address</label>
-                                            <input type="email" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="parent@example.com" />
+                                            <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all" placeholder="parent@example.com" />
                                         </div>
                                         <div className="md:col-span-2">
                                             <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Residential Address</label>
-                                            <textarea rows="2" className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all"></textarea>
+                                            <textarea rows="2" name="address" value={formData.address} onChange={handleChange} className="w-full p-3 rounded-md bg-gray-50 border border-slate-200 text-slate-900 focus:border-iis-maroon focus:outline-none focus:ring-1 focus:ring-iis-maroon transition-all"></textarea>
                                         </div>
                                     </div>
 
@@ -171,8 +223,8 @@ export default function AdmissionsPage() {
                                         <button type="button" onClick={handlePrev} className="text-slate-500 font-bold px-6 hover:text-iis-navy">
                                             Back
                                         </button>
-                                        <button type="submit" className="bg-iis-gold text-iis-navy px-10 py-3 rounded-sm font-bold uppercase tracking-wider hover:bg-yellow-600 transition-colors shadow-lg">
-                                            Submit Inquiry
+                                        <button type="submit" disabled={submitting} className="bg-iis-gold text-iis-navy px-10 py-3 rounded-sm font-bold uppercase tracking-wider hover:bg-yellow-600 transition-colors shadow-lg disabled:opacity-50">
+                                            {submitting ? 'Submitting...' : 'Submit Inquiry'}
                                         </button>
                                     </div>
                                 </div>

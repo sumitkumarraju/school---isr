@@ -2,6 +2,9 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import NoticeBoard from '@/components/NoticeBoard';
+import AdmissionBanner from '@/components/AdmissionBanner';
+import AcademicAchievers from '@/components/AcademicAchievers';
 
 export default function Home() {
   const textRef = useRef(null);
@@ -26,6 +29,7 @@ export default function Home() {
 
   return (
     <>
+      <AdmissionBanner />
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/building.png')] bg-cover bg-center opacity-40"></div>
@@ -45,12 +49,12 @@ export default function Home() {
           </div>
 
           <p className="font-serif text-lg md:text-2xl text-slate-200 mb-4 italic leading-relaxed">
-            "न चौर हार्यं न च राज हार्यं । न भ्रात्रभाज्यं न च भारकारी ।<br />
-            व्यये कृते वर्धते नित्यं । विद्या धनं सर्व धनं प्रधानम् ।।"
+            &quot;न चौर हार्यं न च राज हार्यं । न भ्रात्रभाज्यं न च भारकारी ।<br />
+            व्यये कृते वर्धते नित्यं । विद्या धनं सर्व धनं प्रधानम् ।।&quot;
           </p>
 
           <p className="text-sm md:text-base text-slate-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed border-t border-gray-700 pt-4 mt-4">
-            "Education is the best wealth among all. No one can steal it, no state can snatch it. It cannot be divided among brothers and it&apos;s not heavy to carry. As one consumes it, it increases; as one shares, it expands."
+            &quot;Education is the best wealth among all. No one can steal it, no state can snatch it. It cannot be divided among brothers and it&apos;s not heavy to carry. As one consumes it, it increases; as one shares, it expands.&quot;
           </p>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
@@ -63,6 +67,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <NoticeBoard />
+
+      <AcademicAchievers />
 
       {/* About Section */}
       <section className="py-20 bg-white">
@@ -189,9 +197,9 @@ export default function Home() {
               <div className="w-full md:w-2/3">
                 <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-slate-100 pb-2 inline-block">A Message from the Chairman</h3>
                 <div className="prose prose-lg text-slate-600">
-                  <p className="mb-4">"Ishwar International School stands as a beacon of quality education rooted in strong values. Our philosophy is guided by our motto Energy, Excellence and Evolution, which we integrate into everyday learning."</p>
-                  <p className="mb-4">"We strive to create an atmosphere where students are encouraged to explore their abilities, develop self-discipline and achieve excellence both academically and physically. Every child receives personal attention and care, ensuring that education remains purposeful, meaningful and enjoyable."</p>
-                  <p className="italic font-semibold">"Our goal is not only academic success but also the development of character, confidence and social responsibility."</p>
+                  <p className="mb-4">&quot;Ishwar International School stands as a beacon of quality education rooted in strong values. Our philosophy is guided by our motto Energy, Excellence and Evolution, which we integrate into everyday learning.&quot;</p>
+                  <p className="mb-4">&quot;We strive to create an atmosphere where students are encouraged to explore their abilities, develop self-discipline and achieve excellence both academically and physically. Every child receives personal attention and care, ensuring that education remains purposeful, meaningful and enjoyable.&quot;</p>
+                  <p className="italic font-semibold">&quot;Our goal is not only academic success but also the development of character, confidence and social responsibility.&quot;</p>
                 </div>
               </div>
             </div>
@@ -211,9 +219,9 @@ export default function Home() {
                   {/* RTL for visual styling, but content is English. Actually flex-row-reverse handles the layout, let's keep text left aligned or justified for readability */}
                 </div>
                 <div className="prose prose-lg text-slate-600 text-left">
-                  <p className="mb-4">"Education has a higher purpose — to shape character and help students find their rightful place in society. At Ishwar International School, we aim to be more than just an academic institution; we aspire to be a center of inspiration, growth and transformation."</p>
-                  <p className="mb-4">"We emphasize experiential learning through laboratories, physical training and real-world activities. A balanced teacher-student ratio ensures personalized attention and creative learning experiences."</p>
-                  <p className="italic font-semibold">"We thank parents for placing their trust in us and assure them of a nurturing and enriching educational journey for their children."</p>
+                  <p className="mb-4">&quot;Education has a higher purpose — to shape character and help students find their rightful place in society. At Ishwar International School, we aim to be more than just an academic institution; we aspire to be a center of inspiration, growth and transformation.&quot;</p>
+                  <p className="mb-4">&quot;We emphasize experiential learning through laboratories, physical training and real-world activities. A balanced teacher-student ratio ensures personalized attention and creative learning experiences.&quot;</p>
+                  <p className="italic font-semibold">&quot;We thank parents for placing their trust in us and assure them of a nurturing and enriching educational journey for their children.&quot;</p>
                 </div>
               </div>
             </div>
@@ -230,9 +238,9 @@ export default function Home() {
               <div className="w-full md:w-2/3">
                 <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-slate-100 pb-2 inline-block">A Message from the Principal</h3>
                 <div className="prose prose-lg text-slate-600">
-                  <p className="mb-4">"Every child enters this world with limitless potential. At Ishwar International School, we strive to create a joyful, safe and intellectually stimulating environment where children feel valued and empowered."</p>
-                  <p className="mb-4">"Our curriculum blends academic excellence with value-based education, creativity and innovation. Teachers play a proactive role in guiding students beyond conventional learning through e-classrooms, collaborative activities and critical thinking exercises."</p>
-                  <p className="italic font-semibold">"For us, education is not a destination but a lifelong journey of discovery, exploration and excellence."</p>
+                  <p className="mb-4">&quot;Every child enters this world with limitless potential. At Ishwar International School, we strive to create a joyful, safe and intellectually stimulating environment where children feel valued and empowered.&quot;</p>
+                  <p className="mb-4">&quot;Our curriculum blends academic excellence with value-based education, creativity and innovation. Teachers play a proactive role in guiding students beyond conventional learning through e-classrooms, collaborative activities and critical thinking exercises.&quot;</p>
+                  <p className="italic font-semibold">&quot;For us, education is not a destination but a lifelong journey of discovery, exploration and excellence.&quot;</p>
                 </div>
               </div>
             </div>
@@ -262,11 +270,14 @@ export default function Home() {
                 Our technology-enabled classrooms provide an inviting and nurturing environment that stimulates curiosity, creativity and active participation.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-lg transition-all border-t-4 border-iis-maroon">
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-lg transition-all border-t-4 border-iis-maroon flex flex-col">
               <h3 className="font-serif text-2xl font-bold text-slate-800 mb-4">Library</h3>
-              <p className="text-slate-600 leading-relaxed">
+              <p className="text-slate-600 leading-relaxed mb-6 flex-grow">
                 The fully computerized library operates on an open-access system, housing a wide collection of books, periodicals and five newspapers in two languages. Class libraries further encourage reading habits among students.
               </p>
+              <Link href="/library" className="group flex items-center text-iis-maroon font-bold uppercase tracking-wider text-sm hover:text-red-800 transition-colors">
+                View Library Gallery <i className="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </Link>
             </div>
           </div>
         </div>
@@ -326,36 +337,46 @@ export default function Home() {
       {/* Creativity & Sports */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative bg-white p-8 rounded-xl shadow-lg border border-gray-100 h-full">
+              <div className="relative bg-white p-8 rounded-xl shadow-lg border border-gray-100 h-full flex flex-col">
                 <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 text-3xl mb-6">
                   <i className="fa-solid fa-palette"></i>
                 </div>
-                <h3 className="font-serif text-3xl font-bold text-slate-800 mb-4">Spirit of Creativity</h3>
-                <p className="text-slate-600 text-lg leading-relaxed mb-6">
-                  Creative expression is an integral part of education. Through music, dance, arts and crafts, students develop self-expression, teamwork and confidence.
+                <h3 className="font-serif text-2xl font-bold text-slate-800 mb-4">Spirit of Creativity</h3>
+                <p className="text-slate-600 text-base leading-relaxed mb-6 flex-grow">
+                  Creative expression is an integral part of education. Through music, dance, arts, and crafts, students develop self-expression, teamwork, and confidence.
                 </p>
-                <p className="text-slate-600 text-lg font-medium">
-                  We identify each child’s strengths and nurture their artistic potential.
-                </p>
+                <Link href="#" className="font-bold text-pink-600 text-sm uppercase tracking-wider group-hover:underline">Explore Arts &rarr;</Link>
               </div>
             </div>
 
             <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative bg-white p-8 rounded-xl shadow-lg border border-gray-100 h-full">
+              <div className="absolute -inset-4 bg-gradient-to-r from-yellow-100 to-green-100 rounded-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative bg-white p-8 rounded-xl shadow-lg border border-gray-100 h-full flex flex-col">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 text-3xl mb-6">
+                  <i className="fa-solid fa-shapes"></i>
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-slate-800 mb-4">Kids Play Zone</h3>
+                <p className="text-slate-600 text-base leading-relaxed mb-6 flex-grow">
+                  A safe and colorful haven for our kindergartners. Designed to stimulate imagination and motor skills through play in a joy-filled environment.
+                </p>
+                <Link href="/kids-zone" className="font-bold text-yellow-600 text-sm uppercase tracking-wider group-hover:underline">View Gallery &rarr;</Link>
+              </div>
+            </div>
+
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-r from-orange-100 to-red-100 rounded-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative bg-white p-8 rounded-xl shadow-lg border border-gray-100 h-full flex flex-col">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-3xl mb-6">
                   <i className="fa-solid fa-volleyball"></i>
                 </div>
-                <h3 className="font-serif text-3xl font-bold text-slate-800 mb-4">Sports & Physical Development</h3>
-                <p className="text-slate-600 text-lg leading-relaxed mb-6">
-                  A healthy mind resides in a healthy body. The school offers global-standard indoor and outdoor sports facilities with trained coaches to develop discipline, coordination, teamwork and sportsmanship.
+                <h3 className="font-serif text-2xl font-bold text-slate-800 mb-4">Sports & Fitness</h3>
+                <p className="text-slate-600 text-base leading-relaxed mb-6 flex-grow">
+                  Global-standard courts and fields. Our trained coaches cultivate discipline, teamwork, and sportsmanship through regular physical training.
                 </p>
-                <p className="text-slate-600 text-lg font-medium">
-                  Students are encouraged to pursue sports with passion, not pressure.
-                </p>
+                <Link href="#" className="font-bold text-orange-600 text-sm uppercase tracking-wider group-hover:underline">Sports Facilities &rarr;</Link>
               </div>
             </div>
           </div>
@@ -408,7 +429,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6">Our Philosophy</h2>
           <p className="text-xl md:text-2xl font-serif italic opacity-90 leading-relaxed">
-            "We channelize our <span className="text-iis-gold">Energy</span>, strive for <span className="text-iis-gold">Excellence</span>, and continuously evolve through <span className="text-iis-gold">Innovation</span>. Our commitment is to deliver the best educational experience and set benchmarks that make Ishwar International School one of India’s most trusted institutions."
+            &quot;We channelize our <span className="text-iis-gold">Energy</span>, strive for <span className="text-iis-gold">Excellence</span>, and continuously evolve through <span className="text-iis-gold">Innovation</span>. Our commitment is to deliver the best educational experience and set benchmarks that make Ishwar International School one of India’s most trusted institutions.&quot;
           </p>
         </div>
       </section>

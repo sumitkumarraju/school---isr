@@ -26,6 +26,14 @@ const EnquirySchema = new mongoose.Schema({
         required: [true, 'Please provide a message'],
         maxlength: [1000, 'Message cannot be more than 1000 characters'],
     },
+    childClass: {
+        type: String,
+        trim: true,
+    },
+    parentName: {
+        type: String,
+        trim: true,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
