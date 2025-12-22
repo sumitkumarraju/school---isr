@@ -177,6 +177,51 @@ export default function AboutPage() {
                     )}
                 </div>
             </section>
+
+            {/* Dedicated Faculty Section */}
+            <section className="py-20 bg-iis-cream">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <span className="text-iis-gold font-bold tracking-widest uppercase text-sm">Mentors & Guides</span>
+                        <h2 className="font-serif text-4xl md:text-5xl font-bold text-iis-maroon mt-2 mb-6">Meet Our Dedicated Faculty</h2>
+                        <div className="w-24 h-1 bg-iis-navy mx-auto mb-8"></div>
+                        <p className="max-w-2xl mx-auto text-slate-600">
+                            Our teachers are more than just educators; they are mentors who guide, inspire, and nurture every student to achieve their best.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        {[
+                            { name: "Bharati", image: "/teacher/BHARATI.jpeg" },
+                            { name: "Bhawana", image: "/teacher/BHWANA.jpeg" },
+                            { name: "Deepika", image: "/teacher/DEEIPKA.jpeg" },
+                            { name: "Jyoti", image: "/teacher/JYOTI.jpeg" },
+                            { name: "Kamlesh", image: "/teacher/KAMLESH.jpg" },
+                            { name: "Lalit", image: "/teacher/LALIT.jpg" },
+                            { name: "Mamta", image: "/teacher/MAMTA.jpeg" },
+                            { name: "Manjot", image: "/teacher/MANJOT.jpg" },
+                            { name: "Manju", image: "/teacher/MANJU.jpeg" },
+                            { name: "Meena", image: "/teacher/MEENA.jpg" },
+                            { name: "Nidhi", image: "/teacher/NIGHI.jpeg" },
+                            { name: "Nisita", image: "/teacher/NISITA.jpeg" },
+                            { name: "Priti", image: "/teacher/PRITI.jpg" },
+                            { name: "Priyanka", image: "/teacher/PRIYUANKA.jpeg" },
+                            { name: "Ravinder", image: "/teacher/RAVINDER.jpg" },
+                            { name: "Rohit", image: "/teacher/ROHIT.jpeg" },
+                            { name: "Shyam", image: "/teacher/SHYAM.jpg" },
+                            { name: "Suman", image: "/teacher/SUMAN.jpg" },
+                        ].map((teacher, idx) => (
+                            <FacultyCard
+                                key={idx}
+                                name={teacher.name}
+                                role="Faculty Member"
+                                image={teacher.image}
+                                imageClassName="aspect-[3/4] object-cover h-64 w-full"
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
