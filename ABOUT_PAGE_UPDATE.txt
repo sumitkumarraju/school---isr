@@ -1,0 +1,32 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import FacultyCard from '@/components/FacultyCard';
+
+export default function AboutPage() {
+    const [activeTab, setActiveTab] = useState('principal');
+    const [staff, setStaff] = useState([]);
+    const [principal, setPrincipal] = useState(null);
+    const [director, setDirector] = useState(null);
+
+    useEffect(() => {
+        fetchStaff();
+    }, []);
+
+    const fetchStaff = async () => {
+        const { data } = await supabase
+            .from('staff')
+            .select('*')
+            .eq('active', true)
+            .order('display_order', { ascending: true });
+
+        if (data) {
+            setStaff(data);
+            setPrincipal(data.find(s => s.designation?.toLowerCase().includes('principal')));
+            setDirector(data.find(s => s.designation?.toLowerCase().includes('director')));
+        }
+    };
+
+    // Use database data if available, otherwise fall back to hardcoded
+    const principalData = principal || { name: 'Mrs. Usha Kaushik', designation: 'Principal', image_url: '/teacher/principla.jpg' };
+    const directorData = director || { name: 'Mrs. Mukesh Malik', designation: 'Director', image_url: '/teacher/director.jpg' };

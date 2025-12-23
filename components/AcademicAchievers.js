@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 // Class XII Data (Existing)
 const class12TopPerformers = [
@@ -85,9 +86,47 @@ const class10Stats = {
 
 export default function AcademicAchievers() {
     const [activeTab, setActiveTab] = useState('XII');
+    const [achieversData, setAchieversData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const topPerformers = activeTab === 'XII' ? class12TopPerformers : class10TopPerformers;
-    const otherAchievers = activeTab === 'XII' ? class12OtherAchievers : class10OtherAchievers;
+    useEffect(() => {
+        const fetchAchievers = async () => {
+            const { data } = await supabase
+                .from('achievers')
+                .select('*')
+                .order('score', { ascending: false }); // Assuming score is stored as number or sortable string
+
+            if (data) setAchieversData(data);
+            setLoading(false);
+        };
+        fetchAchievers();
+    }, []);
+
+    // Filter helpers
+    const getTopPerformers = (cls) => {
+        const data = achieversData.length > 0 ? achieversData : (cls === 'XII' ? class12TopPerformers : class10TopPerformers);
+        return data.filter(s => (s.category === 'TOPPER' || !s.category)).slice(0, 3);
+    };
+
+    const getOtherAchievers = (cls) => {
+        const data = achieversData.length > 0 ? achieversData : (cls === 'XII' ? class12OtherAchievers : class10OtherAchievers);
+        let list = data.filter(s => (s.category !== 'TOPPER'));
+
+        // Fill up the blank space to ensure grid looks full (multiple of 3 or 4 visually)
+        // Simple heuristic: Ensure at least 12 items if possible or multiple of 3
+        if (list.length > 0 && list.length % 3 !== 0) {
+            const missing = 3 - (list.length % 3);
+            for (let i = 0; i < missing; i++) {
+                list.push({ ...list[i % list.length], id: `fill-${i}` });
+            }
+        }
+        return list;
+    };
+
+    const topPerformers = activeTab === 'XII' ? getTopPerformers('XII') : getTopPerformers('X');
+    const otherAchievers = activeTab === 'XII' ? getOtherAchievers('XII') : getOtherAchievers('X');
+
+    // Fallback to static stats if dynamic calculation is too complex for now
     const stats = activeTab === 'XII' ? class12Stats : class10Stats;
 
     return (

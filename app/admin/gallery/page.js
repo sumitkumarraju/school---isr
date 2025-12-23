@@ -104,7 +104,7 @@ export default function GalleryManager() {
     };
 
     return (
-        <div className="p-6">
+        <div>
             <input
                 type="file"
                 ref={fileInputRef}
@@ -114,39 +114,40 @@ export default function GalleryManager() {
             />
             <div className="flex justify-between items-center mb-8">
                 <div>
-                    <h2 className="text-2xl font-serif font-bold text-slate-800">Gallery Manager</h2>
-                    <p className="text-sm text-slate-500">Add or remove campus photos</p>
+                    <h2 className="text-2xl font-serif font-bold text-iis-navy">Gallery & Kids Zone</h2>
+                    <p className="text-sm text-slate-500">Manage campus photos and gallery section.</p>
                 </div>
-                <button onClick={handleUploadClick} className="flex items-center gap-2 bg-yellow-600 text-white px-6 py-2 rounded shadow hover:bg-yellow-700 transition font-medium">
+                <button onClick={handleUploadClick} className="flex items-center gap-2 bg-iis-gold text-iis-navy px-6 py-2 rounded shadow hover:bg-yellow-500 transition font-bold">
                     <FaCloudUploadAlt /> Upload New Photo
                 </button>
             </div>
 
-            {loading ? <div>Loading...</div> : (
+            {loading ? <div className="text-center text-slate-500 p-12">Loading gallery...</div> : (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {/* Upload Placeholder Card */}
+                    <div onClick={handleUploadClick} className="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400 h-56 bg-slate-50 cursor-pointer hover:bg-white hover:border-iis-gold transition group">
+                        <FaCloudUploadAlt className="text-4xl mb-2 group-hover:text-iis-gold transition-colors" />
+                        <span className="text-sm font-medium group-hover:text-iis-navy">Click to Upload</span>
+                    </div>
+
                     {/* Images */}
                     {images.map((img) => (
-                        <div key={img.id} className="relative group rounded-lg overflow-hidden h-56 shadow-md border border-gray-100">
-                            <img src={img.image_url} className="w-full h-full object-cover" alt="Gallery" />
+                        <div key={img.id} className="relative group rounded-lg overflow-hidden h-56 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <img src={img.image_url} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="Gallery" />
 
                             {/* Overlay Action */}
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                                <span className="text-white text-xs font-medium">{img.title}</span>
+                            <div className="absolute inset-0 bg-iis-navy/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
+                                <span className="text-white text-xs font-bold px-2 text-center">{img.title}</span>
                                 <button
                                     onClick={() => handleDelete(img.id, img.image_url)}
-                                    className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition"
+                                    className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition shadow-lg mt-2"
+                                    title="Delete Photo"
                                 >
                                     <FaTrash />
                                 </button>
                             </div>
                         </div>
                     ))}
-
-                    {/* Upload Placeholder Card */}
-                    <div onClick={handleUploadClick} className="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400 h-56 bg-gray-50 cursor-pointer hover:bg-gray-100 hover:border-yellow-600 transition group">
-                        <FaCloudUploadAlt className="text-4xl mb-2 group-hover:text-yellow-600" />
-                        <span className="text-sm font-medium">Click to Upload</span>
-                    </div>
                 </div>
             )}
         </div>

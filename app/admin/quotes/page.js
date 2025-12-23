@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaPlus, FaQuoteLeft, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaQuoteLeft, FaTrash, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import Modal from '@/components/ui/Modal';
 
 export default function QuotesPage() {
@@ -73,13 +73,8 @@ export default function QuotesPage() {
     const handleDelete = async (id) => {
         if (!confirm("Delete this quote?")) return;
         try {
-            const { error } = await supabase
-                .from('quotes')
-                .delete()
-                .eq('id', id);
-
+            const { error } = await supabase.from('quotes').delete().eq('id', id);
             if (error) throw error;
-
             setQuotes(quotes.filter(q => q.id !== id));
         } catch (error) {
             alert("Failed to delete");
@@ -87,56 +82,57 @@ export default function QuotesPage() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
-            <div className="flex justify-between items-center mb-8">
+        <div className="max-w-5xl mx-auto">
+            <div className="mb-8 flex justify-between items-center">
                 <div>
-                    <h2 className="text-2xl font-serif font-bold text-slate-800">Quotes Management</h2>
-                    <p className="text-sm text-slate-500">Inspiring words displayed on the site</p>
+                    <h2 className="text-2xl font-serif font-bold text-iis-navy">Words of Wisdom</h2>
+                    <p className="text-sm text-slate-500">Manage the daily quotes displayed on the site.</p>
                 </div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition-colors"
+                    className="flex items-center gap-2 bg-iis-gold text-iis-navy px-5 py-2 rounded shadow hover:bg-yellow-500 transition font-bold"
                 >
-                    <FaPlus /> Add Quote
+                    <FaPlus /> Add New Quote
                 </button>
             </div>
 
+            {/* Existing Quotes */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-                {loading ? <div className="p-4 text-center">Loading...</div> : quotes.map((quote) => (
-                    <div key={quote.id} className="p-4 border-b last:border-0 flex items-center justify-between hover:bg-gray-50">
-                        <div className="flex items-center gap-4 flex-1">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${quote.active ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-400'}`}>
-                                <FaQuoteLeft />
+                <div className="p-4 border-b bg-gray-50 font-bold text-slate-700">Active Quotes Library</div>
+                {loading ? (
+                    <div className="p-8 text-center text-gray-500">Loading quotes...</div>
+                ) : (
+                    <div className="divide-y divide-gray-100">
+                        {quotes.map((quote) => (
+                            <div key={quote.id} className="p-6 flex items-start gap-4 hover:bg-slate-50 transition-colors">
+                                <div className={`mt-1 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${quote.active ? 'bg-iis-maroon text-white' : 'bg-gray-200 text-gray-400'}`}>
+                                    <FaQuoteLeft />
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-lg text-slate-800 font-serif italic mb-2">"{quote.text}"</p>
+                                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">— {quote.author || 'Unknown'}</p>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={() => handleToggle(quote.id, quote.active)}
+                                        title={quote.active ? "Deactivate" : "Activate"}
+                                        className={`text-2xl transition-colors ${quote.active ? 'text-green-500 hover:text-green-600' : 'text-gray-300 hover:text-green-400'}`}
+                                    >
+                                        {quote.active ? <FaToggleOn /> : <FaToggleOff />}
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(quote.id)}
+                                        className="text-red-300 hover:text-red-500 p-2"
+                                        title="Delete"
+                                    >
+                                        <FaTrash />
+                                    </button>
+                                </div>
                             </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="font-medium text-slate-800 truncate">"{quote.text}"</p>
-                                <p className="text-xs text-slate-500">- {quote.author || 'Unknown'}</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-3 ml-4">
-                            <div className={`text-xs px-2 py-1 rounded ${quote.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
-                                {quote.active ? 'Active' : 'Inactive'}
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={quote.active}
-                                    onChange={() => handleToggle(quote.id, quote.active)}
-                                    className="sr-only peer"
-                                />
-                                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600"></div>
-                            </label>
-                            <button
-                                onClick={() => handleDelete(quote.id)}
-                                className="text-red-400 hover:text-red-600 p-2"
-                            >
-                                <FaTrash />
-                            </button>
-                        </div>
+                        ))}
                     </div>
-                ))}
-                {!loading && quotes.length === 0 && <div className="p-4 text-center text-gray-500">No quotes found</div>}
+                )}
+                {!loading && quotes.length === 0 && <div className="p-8 text-center text-gray-400 italic">No quotes found. Add one to inspire students!</div>}
             </div>
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Quote">
@@ -145,29 +141,29 @@ export default function QuotesPage() {
                         <label className="block text-sm font-bold text-gray-700 mb-1">Quote Text</label>
                         <textarea
                             required
-                            rows={3}
+                            rows={4}
                             value={newQuote.text}
                             onChange={(e) => setNewQuote({ ...newQuote, text: e.target.value })}
-                            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                            placeholder="Enter the quote..."
+                            className="w-full p-4 border rounded focus:ring-2 focus:ring-iis-gold outline-none resize-none bg-slate-50"
+                            placeholder="Enter the quote here..."
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-1">Author (Optional)</label>
+                        <label className="block text-sm font-bold text-gray-700 mb-1">Author Name </label>
                         <input
                             type="text"
                             value={newQuote.author}
                             onChange={(e) => setNewQuote({ ...newQuote, author: e.target.value })}
-                            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                            placeholder="E.g., Albert Einstein"
+                            className="w-full p-3 border rounded focus:ring-2 focus:ring-iis-gold outline-none bg-slate-50"
+                            placeholder="e.g. A.P.J. Abdul Kalam"
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full bg-slate-900 text-white font-bold py-2 rounded hover:bg-slate-700 disabled:opacity-50"
+                        className="w-full bg-iis-navy text-white font-bold py-3 rounded hover:bg-slate-800 disabled:opacity-50 transition-colors"
                     >
-                        {submitting ? 'Adding...' : 'Add Quote'}
+                        {submitting ? 'Publishing...' : 'Publish Quote'}
                     </button>
                 </form>
             </Modal>

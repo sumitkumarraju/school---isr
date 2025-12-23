@@ -1,14 +1,40 @@
-import React from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 import FacultyCard from '@/components/FacultyCard';
 
-export const metadata = {
-    title: 'Academics',
-    description: 'Explore our CBSE curriculum, holistic education approach, and state-of-the-art laboratories designed for experiential learning.',
-};
-
 export default function AcademicsPage() {
-    // Verified images from public folder
-    const facultyMembers = [
+    const [activeSection, setActiveSection] = useState('curriculum');
+    const [facultyMembers, setFacultyMembers] = useState([]);
+
+    useEffect(() => {
+        fetchFaculty();
+    }, []);
+
+    const fetchFaculty = async () => {
+        const { data } = await supabase
+            .from('staff')
+            .select('*')
+            .eq('active', true)
+            .order('display_order', { ascending: true });
+
+        if (data && data.length > 0) {
+            // Map database fields to component props
+            const mappedFaculty = data.map(teacher => ({
+                name: teacher.name,
+                role: teacher.designation,
+                image: teacher.image_url
+            }));
+            setFacultyMembers(mappedFaculty);
+        } else {
+            // Fallback to hardcoded data if database is empty
+            setFacultyMembers(hardcodedFaculty);
+        }
+    };
+
+
+    // Fallback hardcoded faculty data
+    const hardcodedFaculty = [
         { name: "Ms. Suman", role: "TGT Maths", image: "/teacher/SUMAN.jpg" },
         { name: "Ms. Manjot", role: "PRT Hindi", image: "/teacher/MANJOT.jpg" },
         { name: "Ms. Meena", role: "PGT Hindi", image: "/teacher/MEENA.jpg" },

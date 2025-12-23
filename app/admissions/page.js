@@ -72,8 +72,8 @@ export default function AdmissionsPage() {
                 throw error;
             }
         } catch (error) {
-            console.error("Submission error:", error);
-            alert("Submission failed: " + error.message);
+            console.error("Submission error details:", JSON.stringify(error, null, 2));
+            alert("Submission failed: " + (error.message || error.error_description || JSON.stringify(error)));
         } finally {
             setSubmitting(false);
         }

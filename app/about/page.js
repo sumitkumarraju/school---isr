@@ -1,10 +1,37 @@
 "use client";
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 import FacultyCard from "@/components/FacultyCard";
 
 export default function AboutPage() {
     const [activeTab, setActiveTab] = useState('principal');
+    const [staff, setStaff] = useState([]);
+    const [principal, setPrincipal] = useState(null);
+    const [director, setDirector] = useState(null);
+
+    useEffect(() => {
+        fetchStaff();
+    }, []);
+
+    const fetchStaff = async () => {
+        const { data } = await supabase
+            .from('staff')
+            .select('*')
+            .eq('active', true)
+            .order('display_order', { ascending: true });
+
+        if (data) {
+            setStaff(data);
+            const principalData = data.find(s => s.designation?.toLowerCase().includes('principal') && !s.designation?.toLowerCase().includes('vice'));
+            const directorData = data.find(s => s.designation?.toLowerCase().includes('director'));
+            setPrincipal(principalData);
+            setDirector(directorData);
+        }
+    };
+
+    // Use database data if available, otherwise fall back to hardcoded
+    const principalData = principal || { name: 'Mrs. Usha Kaushik', designation: 'Principal', image_url: '/teacher/principla.jpg' };
+    const directorData = director || { name: 'Mrs. Mukesh Malik', designation: 'Director', image_url: '/teacher/DIRECTOR WOMEN.jpeg' };
 
     return (
         <div className="bg-white">
@@ -101,9 +128,9 @@ export default function AboutPage() {
                                 <div className="w-full md:w-1/3 flex flex-col items-center sticky top-20">
                                     <div className="w-full max-w-sm">
                                         <FacultyCard
-                                            name="Mrs. Usha Kaushik"
-                                            role="Principal"
-                                            image="/teacher/principla.jpg"
+                                            name={principalData.name}
+                                            role={principalData.designation}
+                                            image={principalData.image_url}
                                             imageClassName="aspect-[3/4] object-cover h-auto"
                                         />
                                     </div>
@@ -146,9 +173,9 @@ export default function AboutPage() {
                                 <div className="w-full md:w-1/3 flex flex-col items-center sticky top-20">
                                     <div className="w-full max-w-sm">
                                         <FacultyCard
-                                            name="Mrs. Mukesh Malik"
-                                            role="Director"
-                                            image="/teacher/DIRECTOR WOMEN.jpeg"
+                                            name={directorData.name}
+                                            role={directorData.designation}
+                                            image={directorData.image_url}
                                             imageClassName="aspect-[3/4] object-cover h-auto"
                                         />
                                     </div>

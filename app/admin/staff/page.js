@@ -1,8 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaPlus, FaUserTie, FaTrash, FaPen } from 'react-icons/fa';
-import Image from 'next/image';
+import { FaPlus, FaUserTie, FaTrash, FaPen, FaEdit } from 'react-icons/fa';
 import Modal from '@/components/ui/Modal';
 
 export default function StaffPage() {
@@ -11,6 +10,7 @@ export default function StaffPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newStaff, setNewStaff] = useState({ name: '', designation: '', image_url: '' });
     const [submitting, setSubmitting] = useState(false);
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         fetchStaff();
@@ -29,6 +29,32 @@ export default function StaffPage() {
             console.error(error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploading(true);
+        const fileName = `staff/${Date.now()}-${file.name.replace(/\s/g, '-')}`;
+
+        try {
+            const { error: uploadError } = await supabase.storage
+                .from('gallery')
+                .upload(fileName, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('gallery')
+                .getPublicUrl(fileName);
+
+            setNewStaff(prev => ({ ...prev, image_url: publicUrl }));
+        } catch (error) {
+            alert('Upload failed: ' + error.message);
+        } finally {
+            setUploading(false);
         }
     };
 
@@ -72,51 +98,58 @@ export default function StaffPage() {
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
-            <div className="flex justify-between items-center mb-8">
+        <div>
+            <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h2 className="text-2xl font-serif font-bold text-slate-800">Staff Management</h2>
-                    <p className="text-sm text-slate-500">Manage faculty and staff profiles</p>
+                    <h2 className="text-2xl font-serif font-bold text-iis-navy">Faculty Management</h2>
+                    <p className="text-sm text-slate-500">Manage teaching staff profiles.</p>
                 </div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded hover:bg-slate-700 transition-colors"
-                >
-                    <FaPlus /> Add Staff
+                    className="flex items-center gap-2 bg-iis-maroon text-white px-5 py-2 rounded shadow hover:bg-red-900 transition">
+                    <FaPlus /> Add New Teacher
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {staff.map((person) => (
-                    <div key={person.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex items-center gap-4 relative group">
-                        <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
-                            {person.image_url ? (
-                                <img src={person.image_url} alt={person.name} className="w-full h-full object-cover" />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                    <FaUserTie size={24} />
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-slate-800">{person.name}</h3>
-                            <p className="text-sm text-slate-500">{person.designation}</p>
-                        </div>
-                        <button
-                            onClick={() => handleDelete(person.id)}
-                            className="absolute top-2 right-2 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                            <FaTrash />
-                        </button>
-                    </div>
-                ))}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <table className="w-full text-left">
+                    <thead className="bg-slate-50 border-b border-gray-200 text-slate-600 font-bold uppercase text-xs">
+                        <tr>
+                            <th className="px-6 py-4">Profile</th>
+                            <th className="px-6 py-4">Name</th>
+                            <th className="px-6 py-4">Designation</th>
+                            <th className="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                        {staff.map((teacher) => (
+                            <tr key={teacher.id} className="hover:bg-slate-50 transition-colors">
+                                <td className="px-6 py-3">
+                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center flex-shrink-0">
+                                        {teacher.image_url ? (
+                                            <img src={teacher.image_url} alt={teacher.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <FaUserTie className="text-gray-400" />
+                                        )}
+                                    </div>
+                                </td>
+                                <td className="px-6 py-3 font-medium text-slate-800">{teacher.name}</td>
+                                <td className="px-6 py-3 text-sm text-slate-600">{teacher.designation}</td>
+                                <td className="px-6 py-3 text-right flex justify-end gap-3">
+                                    <button className="text-blue-600 hover:text-blue-800"><FaEdit /></button>
+                                    <button onClick={() => handleDelete(teacher.id)} className="text-red-600 hover:text-red-800"><FaTrash /></button>
+                                </td>
+                            </tr>
+                        ))}
+                        {staff.length === 0 && !loading && (
+                            <tr>
+                                <td colSpan="4" className="px-6 py-8 text-center text-slate-400 italic">No faculty members found. Add one above.</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                {loading && <div className="p-8 text-center text-slate-500">Loading faculty...</div>}
             </div>
-
-            {!loading && staff.length === 0 && (
-                <div className="text-center py-12 bg-white rounded border border-gray-100 text-gray-400">
-                    No staff members found.
-                </div>
-            )}
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Staff Member">
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -143,21 +176,22 @@ export default function StaffPage() {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-1">Profile Image URL</label>
+                        <label className="block text-sm font-bold text-gray-700 mb-1">Profile Photo</label>
                         <input
-                            type="url"
-                            value={newStaff.image_url}
-                            onChange={(e) => setNewStaff({ ...newStaff, image_url: e.target.value })}
-                            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                            placeholder="https://..."
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="w-full"
                         />
+                        {uploading && <p className="text-xs text-blue-500 mt-1">Uploading...</p>}
+                        {newStaff.image_url && <p className="text-xs text-green-600 mt-1">✓ Photo uploaded</p>}
                     </div>
                     <button
                         type="submit"
-                        disabled={submitting}
-                        className="w-full bg-slate-900 text-white font-bold py-2 rounded hover:bg-slate-700 disabled:opacity-50"
+                        disabled={submitting || uploading}
+                        className="w-full bg-iis-maroon text-white font-bold py-2 rounded hover:bg-red-900 disabled:opacity-50"
                     >
-                        {submitting ? 'Adding...' : 'Add Staff'}
+                        {submitting ? 'Adding...' : uploading ? 'Uploading Photo...' : 'Add Staff'}
                     </button>
                 </form>
             </Modal>

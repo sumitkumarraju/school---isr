@@ -41,6 +41,33 @@ export default function Navbar() {
                 </a>
             </div>
 
+            {/* Top Info Bar */}
+            <div className="bg-iis-navy text-white py-3 text-sm font-medium">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="flex items-center gap-6">
+                        <a href="tel:+919996390013" className="flex items-center gap-2 hover:text-gray-200 transition-colors">
+                            <i className="fa-solid fa-phone"></i>
+                            <span>+91 99963 90013</span>
+                        </a>
+                        <a href="mailto:admin@iisgohana.com" className="flex items-center gap-2 hover:text-gray-200 transition-colors">
+                            <i className="fa-solid fa-envelope"></i>
+                            <span className="hidden sm:inline">admin@iisgohana.com</span>
+                            <span className="sm:hidden">Email Us</span>
+                        </a>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <Link href="/notices" className="hover:text-gray-200 transition-colors flex items-center gap-2">
+                            <i className="fa-solid fa-bell"></i>
+                            Latest Notices
+                        </Link>
+                        <span className="opacity-50">|</span>
+                        <Link href="/admissions" className="hover:text-gray-200 transition-colors">
+                            Apply Now
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
             <header
                 id="navbar"
                 className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 transition-all duration-500 ease-in-out ${isScrolled ? 'py-2 shadow-md' : 'py-5'

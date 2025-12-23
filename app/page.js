@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 import Link from 'next/link';
 import Image from 'next/image';
 import NoticeBoard from '@/components/NoticeBoard';
@@ -10,6 +11,30 @@ import NoticeCorner from '@/components/NoticeCorner';
 
 export default function Home() {
   const textRef = useRef(null);
+  const [heroSlides, setHeroSlides] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const fetchSlides = async () => {
+      const { data } = await supabase
+        .from('hero_slides')
+        .select('*')
+        .eq('active', true)
+        .order('created_at', { ascending: false });
+
+      if (data && data.length > 0) {
+        setHeroSlides(data);
+      }
+    };
+    fetchSlides();
+  }, []);
+
+  // Use default slide if no dynamic slides are found
+  const activeSlide = heroSlides.length > 0 ? heroSlides[0] : {
+    title: "Ishwar International School",
+    subtitle: "Energy • Excellence • Evolution",
+    image_url: "/building.png"
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,20 +59,20 @@ export default function Home() {
       <AdmissionBanner />
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/building.png')] bg-cover bg-center opacity-40"></div>
+        <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url('${activeSlide.image_url}')` }}></div>
 
         <div className="relative z-10 text-center max-w-5xl px-4 animate-fade-in-up">
 
           <h1 className="font-serif text-5xl md:text-7xl font-bold mb-2 leading-tight text-white tracking-wide">
-            <span id="ishwar-text" ref={textRef} className="relative inline-block transition-all duration-75">ईshwar</span> International School
+            {activeSlide.title === "Ishwar International School" ? (
+              <span><span id="ishwar-text" ref={textRef} className="relative inline-block transition-all duration-75">ईshwar</span> International School</span>
+            ) : (
+              <span>{activeSlide.title}</span>
+            )}
           </h1>
 
           <div className="flex items-center justify-center gap-3 text-iis-gold font-bold tracking-[0.2em] uppercase mb-8 text-sm md:text-xl">
-            <span>Energy</span>
-            <span className="text-xs align-middle">•</span>
-            <span>Excellence</span>
-            <span className="text-xs align-middle">•</span>
-            <span>Evolution</span>
+            {activeSlide.subtitle}
           </div>
 
           <p className="font-serif text-lg md:text-2xl text-slate-200 mb-4 italic leading-relaxed">

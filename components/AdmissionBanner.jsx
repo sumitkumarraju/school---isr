@@ -6,9 +6,8 @@ export default function AdmissionBanner() {
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
-        fetch('/api/admission')
-            .then(res => res.json())
-            .then(data => setStatus(data));
+        // Static status for now, or fetch from Supabase 'site_settings' if created later
+        setStatus({ isOpen: true, sessionYear: '2025-26', noticeText: 'Limited seats available.' });
     }, []);
 
     if (!status || !status.isOpen) return null;

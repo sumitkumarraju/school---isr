@@ -58,6 +58,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${inter.variable} ${playfair.variable} scroll-smooth`}
+      suppressHydrationWarning={true}
     >
       <body className="antialiased font-sans text-slate-800 bg-white">
         <Navbar />
