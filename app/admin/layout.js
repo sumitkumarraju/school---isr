@@ -1,20 +1,35 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
-import { FaLayerGroup, FaBullhorn, FaQuoteRight, FaTrophy, FaUserGraduate, FaUserTie, FaBook, FaFileAlt, FaImages, FaSignOutAlt, FaChartPie, FaChalkboardTeacher, FaFilePdf, FaMoneyBillWave } from 'react-icons/fa';
-
-
+import {
+    LayoutDashboard,
+    GraduationCap,
+    Megaphone,
+    Image as ImageIcon,
+    MessageSquare,
+    Settings,
+    LogOut,
+    Menu,
+    X,
+    FileText,
+    Users,
+    Trophy,
+    Newspaper,
+    DollarSign,
+    Shield,
+    Mail
+} from 'lucide-react';
 
 export default function AdminLayout({ children }) {
     const router = useRouter();
     const pathname = usePathname();
     const [loading, setLoading] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         const checkAuth = async () => {
-            // Allow access to login page without auth
             if (pathname === '/admin/login') {
                 setLoading(false);
                 return;
@@ -29,84 +44,119 @@ export default function AdminLayout({ children }) {
         checkAuth();
     }, [pathname, router]);
 
-    const isActive = (path) => pathname === path ? 'bg-iis-gold text-iis-navy shadow-md' : 'text-slate-300 hover:bg-white/10 hover:text-white';
+    const handleSignOut = async () => {
+        await supabase.auth.signOut();
+        router.push('/admin/login');
+    };
+
+    const menuItems = [
+        { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/admin/dashboard' },
+        { name: 'Admissions', icon: <GraduationCap size={20} />, path: '/admin/admissions' },
+        { name: 'Inquiries', icon: <Mail size={20} />, path: '/admin/inquiries' },
+        { name: 'Notices', icon: <Megaphone size={20} />, path: '/admin/notices' },
+        { name: 'Achievers', icon: <Trophy size={20} />, path: '/admin/achievers' },
+        { name: 'Gallery', icon: <ImageIcon size={20} />, path: '/admin/gallery' },
+        { name: 'Hero Slides', icon: <Newspaper size={20} />, path: '/admin/hero' },
+        { name: 'Staff', icon: <Users size={20} />, path: '/admin/staff' },
+        { name: 'Quotes', icon: <MessageSquare size={20} />, path: '/admin/quotes' },
+        { name: 'Public Disclosure', icon: <Shield size={20} />, path: '/admin/public-disclosure' },
+        { name: 'Fees', icon: <DollarSign size={20} />, path: '/admin/fees' },
+    ];
 
     if (loading) return <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-600 font-serif">Loading Admin Panel...</div>;
 
-    // If on login page, render only children (no sidebar/layout)
     if (pathname === '/admin/login') {
         return <>{children}</>;
     }
 
     return (
-        <div className="flex min-h-screen bg-slate-50 font-sans">
+        <div className="flex h-screen bg-slate-50 font-sans text-slate-900">
+
+            {/* MOBILE OVERLAY */}
+            {sidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-20 lg:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
+
             {/* SIDEBAR */}
-            <aside className="w-64 bg-iis-navy text-white flex flex-col fixed h-full shadow-2xl z-20">
-                <div className="p-6 border-b border-slate-700 flex items-center gap-3">
-                    <div className="w-10 h-10 bg-iis-gold rounded-full flex items-center justify-center text-iis-navy font-bold text-xl">ॐ</div>
-                    <div>
-                        <h1 className="font-serif text-xl font-bold tracking-wide">Ishwar Admin</h1>
-                        <p className="text-[10px] text-slate-400 uppercase tracking-wider">Control Panel</p>
+            <aside className={`
+        fixed lg:static top-0 left-0 z-30 h-full w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+                <div className="h-16 flex items-center justify-between px-6 bg-slate-950 border-b border-slate-800">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-lg">ॐ</div>
+                        <span className="font-bold text-lg tracking-tight">IIS Admin</span>
                     </div>
-                </div>
-
-                <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
-
-                    <div className="text-xs font-bold text-slate-500 uppercase px-3 mt-2 mb-1">Main</div>
-                    <Link href="/admin/dashboard" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/dashboard')}`}>
-                        <FaChartPie /> <span>Dashboard</span>
-                    </Link>
-
-                    <div className="text-xs font-bold text-slate-500 uppercase px-3 mt-6 mb-1">Content Management</div>
-                    <Link href="/admin/hero" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/hero')}`}>
-                        <FaLayerGroup /> <span>Hero & Slider</span>
-                    </Link>
-                    <Link href="/admin/notices" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/notices')}`}>
-                        <FaBullhorn /> <span>Notice Board</span>
-                    </Link>
-                    <Link href="/admin/quotes" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/quotes')}`}>
-                        <FaQuoteRight /> <span>Words of Wisdom</span>
-                    </Link>
-                    <Link href="/admin/achievers" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/achievers')}`}>
-                        <FaTrophy /> <span>Academic Achievers</span>
-                    </Link>
-                    {/* <Link href="/admin/leadership" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/leadership')}`}>
-                        <FaUserGraduate /> <span>Leadership Messages</span>
-                    </Link> */}
-
-                    <div className="text-xs font-bold text-slate-500 uppercase px-3 mt-6 mb-1">School Management</div>
-                    <Link href="/admin/inquiries" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/inquiries')}`}>
-                        <FaUserGraduate /> <span>Inquiries</span>
-                    </Link>
-                    <Link href="/admin/staff" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/staff')}`}>
-                        <FaChalkboardTeacher /> <span>Faculty / Staff</span>
-                    </Link>
-                    <Link href="/admin/admissions" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/admissions')}`}>
-                        <FaUserGraduate /> <span>Admissions</span>
-                    </Link>
-                    <Link href="/admin/fees" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/fees')}`}>
-                        <FaMoneyBillWave /> <span>Fee Structure</span>
-                    </Link>
-                    <Link href="/admin/gallery" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/gallery')}`}>
-                        <FaImages /> <span>Gallery & Kids Zone</span>
-                    </Link>
-                    <Link href="/admin/public-disclosure" className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive('/admin/public-disclosure')}`}>
-                        <FaFilePdf /> <span>Public Disclosure</span>
-                    </Link>
-
-                </nav>
-
-                <div className="p-4 border-t border-slate-700">
-                    <button onClick={async () => { await supabase.auth.signOut(); router.push('/admin/login'); }} className="flex items-center gap-3 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-white/5 rounded transition w-full text-left">
-                        <FaSignOutAlt /> <span>Log Out</span>
+                    <button className="lg:hidden text-slate-400" onClick={() => setSidebarOpen(false)}>
+                        <X size={24} />
                     </button>
                 </div>
+
+                <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100vh-4rem)]">
+                    <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2">Main Menu</div>
+
+                    {menuItems.map((item) => {
+                        const isActive = pathname === item.path;
+                        return (
+                            <Link
+                                key={item.path}
+                                href={item.path}
+                                onClick={() => setSidebarOpen(false)}
+                                className={`
+                  flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+                  ${isActive
+                                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20'
+                                        : 'text-slate-400 hover:text-white hover:bg-slate-800'}
+                `}
+                            >
+                                {item.icon}
+                                {item.name}
+                            </Link>
+                        );
+                    })}
+
+                    <div className="pt-8 mt-8 border-t border-slate-800">
+                        <button
+                            onClick={handleSignOut}
+                            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium text-red-400 hover:bg-red-950/30 hover:text-red-300 transition-colors"
+                        >
+                            <LogOut size={20} />
+                            Sign Out
+                        </button>
+                    </div>
+                </nav>
             </aside>
 
-            {/* MAIN CONTENT AREA */}
-            <main className="flex-1 ml-64 p-8 bg-slate-50 min-h-screen">
-                {children}
-            </main>
+            {/* MAIN CONTENT WRAPPER */}
+            <div className="flex-1 flex flex-col h-screen overflow-hidden">
+
+                {/* TOP HEADER */}
+                <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8">
+                    <button className="lg:hidden p-2 -ml-2 text-slate-600" onClick={() => setSidebarOpen(true)}>
+                        <Menu size={24} />
+                    </button>
+
+                    <div className="flex items-center gap-4 ml-auto">
+                        <div className="text-right hidden sm:block">
+                            <p className="text-sm font-medium text-slate-900">Admin User</p>
+                            <p className="text-xs text-slate-500">Super Admin</p>
+                        </div>
+                        <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold border border-indigo-200">
+                            AD
+                        </div>
+                    </div>
+                </header>
+
+                {/* PAGE CONTENT */}
+                <main className="flex-1 overflow-auto p-4 lg:p-8">
+                    <div className="max-w-7xl mx-auto">
+                        {children}
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

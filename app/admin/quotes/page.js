@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaPlus, FaQuoteLeft, FaTrash, FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import { Plus, Quote, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 
 export default function QuotesPage() {
@@ -92,7 +92,7 @@ export default function QuotesPage() {
                     onClick={() => setIsModalOpen(true)}
                     className="flex items-center gap-2 bg-iis-gold text-iis-navy px-5 py-2 rounded shadow hover:bg-yellow-500 transition font-bold"
                 >
-                    <FaPlus /> Add New Quote
+                    <Plus size={18} /> Add New Quote
                 </button>
             </div>
 
@@ -106,7 +106,7 @@ export default function QuotesPage() {
                         {quotes.map((quote) => (
                             <div key={quote.id} className="p-6 flex items-start gap-4 hover:bg-slate-50 transition-colors">
                                 <div className={`mt-1 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${quote.active ? 'bg-iis-maroon text-white' : 'bg-gray-200 text-gray-400'}`}>
-                                    <FaQuoteLeft />
+                                    <Quote size={20} />
                                 </div>
                                 <div className="flex-1">
                                     <p className="text-lg text-slate-800 font-serif italic mb-2">"{quote.text}"</p>
@@ -118,14 +118,14 @@ export default function QuotesPage() {
                                         title={quote.active ? "Deactivate" : "Activate"}
                                         className={`text-2xl transition-colors ${quote.active ? 'text-green-500 hover:text-green-600' : 'text-gray-300 hover:text-green-400'}`}
                                     >
-                                        {quote.active ? <FaToggleOn /> : <FaToggleOff />}
+                                        {quote.active ? <ToggleRight size={24} /> : <ToggleLeft size={24} />}
                                     </button>
                                     <button
                                         onClick={() => handleDelete(quote.id)}
                                         className="text-red-300 hover:text-red-500 p-2"
                                         title="Delete"
                                     >
-                                        <FaTrash />
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
                             </div>

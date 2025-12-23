@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaCloudUploadAlt, FaTrash } from 'react-icons/fa';
+import { Upload, Trash2, Image as ImageIcon } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -118,7 +118,7 @@ export default function GalleryManager() {
                     <p className="text-sm text-slate-500">Manage campus photos and gallery section.</p>
                 </div>
                 <button onClick={handleUploadClick} className="flex items-center gap-2 bg-iis-gold text-iis-navy px-6 py-2 rounded shadow hover:bg-yellow-500 transition font-bold">
-                    <FaCloudUploadAlt /> Upload New Photo
+                    <Upload size={20} /> Upload New Photo
                 </button>
             </div>
 
@@ -126,7 +126,7 @@ export default function GalleryManager() {
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {/* Upload Placeholder Card */}
                     <div onClick={handleUploadClick} className="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400 h-56 bg-slate-50 cursor-pointer hover:bg-white hover:border-iis-gold transition group">
-                        <FaCloudUploadAlt className="text-4xl mb-2 group-hover:text-iis-gold transition-colors" />
+                        <Upload className="text-4xl mb-2 group-hover:text-iis-gold transition-colors" size={40} />
                         <span className="text-sm font-medium group-hover:text-iis-navy">Click to Upload</span>
                     </div>
 
@@ -143,7 +143,7 @@ export default function GalleryManager() {
                                     className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition shadow-lg mt-2"
                                     title="Delete Photo"
                                 >
-                                    <FaTrash />
+                                    <Trash2 size={18} />
                                 </button>
                             </div>
                         </div>

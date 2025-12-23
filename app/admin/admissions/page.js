@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaSearch, FaEye, FaTrash, FaFileCsv } from 'react-icons/fa';
+import { Search, Eye, Trash2, FileDown } from 'lucide-react';
 
 export default function AdmissionsPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -51,12 +51,16 @@ export default function AdmissionsPage() {
                 .update({ status: newStatus })
                 .eq('id', id);
 
-            if (error) throw error;
+            if (error) {
+                console.error('Status update error:', error);
+                throw error;
+            }
 
             setApplications(applications.map(app => app.id === id ? { ...app, status: newStatus } : app));
             if (selectedApp) setSelectedApp({ ...selectedApp, status: newStatus });
         } catch (error) {
-            alert('Status update failed');
+            console.error('Full error:', error);
+            alert('Status update failed: ' + (error.message || 'Unknown error'));
         }
     };
 
@@ -77,7 +81,7 @@ export default function AdmissionsPage() {
 
                 <div className="flex gap-3">
                     <div className="relative">
-                        <FaSearch className="absolute left-3 top-3 text-slate-400" />
+                        <Search className="absolute left-3 top-3 text-slate-400" size={18} />
                         <input
                             type="text"
                             placeholder="Search name or mobile..."
@@ -136,14 +140,14 @@ export default function AdmissionsPage() {
                                             className="p-2 text-iis-navy hover:bg-slate-200 rounded transition"
                                             title="View Details"
                                         >
-                                            <FaEye />
+                                            <Eye size={18} />
                                         </button>
                                         <button
                                             onClick={() => handleDelete(row.id)}
                                             className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition"
                                             title="Delete"
                                         >
-                                            <FaTrash />
+                                            <Trash2 size={18} />
                                         </button>
                                     </td>
                                 </tr>

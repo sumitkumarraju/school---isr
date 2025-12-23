@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaTrophy, FaPlus } from 'react-icons/fa';
+import { Trophy, Plus } from 'lucide-react';
 
 // Placeholder data for now, as we don't have a table for this yet.
 // In a real scenario, we would create a 'toppers' table in Supabase.
@@ -95,7 +95,7 @@ export default function AchieversManager() {
                     <p className="text-sm text-slate-500">Highlight Class X & XII Toppers</p>
                 </div>
                 <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 bg-iis-maroon text-white px-5 py-2 rounded shadow hover:bg-red-900 transition">
-                    <FaPlus /> Add Achiever
+                    <Plus size={18} /> Add Achiever
                 </button>
             </div>
 
@@ -103,7 +103,7 @@ export default function AchieversManager() {
             {toppers.length > 0 && (
                 <div className="mb-12">
                     <div className="flex items-center gap-3 mb-6">
-                        <FaTrophy className="text-iis-gold text-2xl" />
+                        <Trophy className="text-iis-gold text-2xl" size={24} />
                         <h3 className="text-xl font-serif font-bold text-iis-navy">Top Performers (Featured on Homepage)</h3>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -178,7 +178,7 @@ export default function AchieversManager() {
 
             {achievers.length === 0 && !loading && (
                 <div className="text-center py-12 text-slate-400">
-                    <FaTrophy className="text-6xl mx-auto mb-4 opacity-20" />
+                    <Trophy className="mx-auto mb-4 opacity-20" size={64} />
                     <p>No achievers added yet. Click "Add Achiever" to start!</p>
                 </div>
             )}

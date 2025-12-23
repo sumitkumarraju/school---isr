@@ -1,13 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaPlus, FaUserTie, FaTrash, FaPen, FaEdit } from 'react-icons/fa';
+import { Plus, UserCog, Trash2, Edit } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 
 export default function StaffPage() {
     const [staff, setStaff] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingStaff, setEditingStaff] = useState(null);
     const [newStaff, setNewStaff] = useState({ name: '', designation: '', image_url: '' });
     const [submitting, setSubmitting] = useState(false);
     const [uploading, setUploading] = useState(false);
@@ -63,27 +64,59 @@ export default function StaffPage() {
         setSubmitting(true);
 
         try {
-            const { data, error } = await supabase
-                .from('staff')
-                .insert([{
-                    name: newStaff.name,
-                    designation: newStaff.designation,
-                    image_url: newStaff.image_url || '',
-                    active: true
-                }])
-                .select();
+            if (editingStaff) {
+                // Update existing staff
+                const { data, error } = await supabase
+                    .from('staff')
+                    .update({
+                        name: newStaff.name,
+                        designation: newStaff.designation,
+                        image_url: newStaff.image_url || ''
+                    })
+                    .eq('id', editingStaff.id)
+                    .select();
 
-            if (error) throw error;
-            if (data) {
-                setStaff([...staff, data[0]]);
-                setIsModalOpen(false);
-                setNewStaff({ name: '', designation: '', image_url: '' });
+                if (error) throw error;
+                if (data) {
+                    setStaff(staff.map(s => s.id === editingStaff.id ? data[0] : s));
+                    setIsModalOpen(false);
+                    setEditingStaff(null);
+                    setNewStaff({ name: '', designation: '', image_url: '' });
+                }
+            } else {
+                // Insert new staff
+                const { data, error } = await supabase
+                    .from('staff')
+                    .insert([{
+                        name: newStaff.name,
+                        designation: newStaff.designation,
+                        image_url: newStaff.image_url || '',
+                        active: true
+                    }])
+                    .select();
+
+                if (error) throw error;
+                if (data) {
+                    setStaff([...staff, data[0]]);
+                    setIsModalOpen(false);
+                    setNewStaff({ name: '', designation: '', image_url: '' });
+                }
             }
         } catch (error) {
-            alert("Failed to add staff: " + error.message);
+            alert("Failed to save staff: " + error.message);
         } finally {
             setSubmitting(false);
         }
+    };
+
+    const handleEdit = (teacher) => {
+        setEditingStaff(teacher);
+        setNewStaff({
+            name: teacher.name,
+            designation: teacher.designation,
+            image_url: teacher.image_url || ''
+        });
+        setIsModalOpen(true);
     };
 
     const handleDelete = async (id) => {
@@ -105,9 +138,9 @@ export default function StaffPage() {
                     <p className="text-sm text-slate-500">Manage teaching staff profiles.</p>
                 </div>
                 <button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => { setEditingStaff(null); setNewStaff({ name: '', designation: '', image_url: '' }); setIsModalOpen(true); }}
                     className="flex items-center gap-2 bg-iis-maroon text-white px-5 py-2 rounded shadow hover:bg-red-900 transition">
-                    <FaPlus /> Add New Teacher
+                    <Plus size={18} /> Add New Teacher
                 </button>
             </div>
 
@@ -129,15 +162,15 @@ export default function StaffPage() {
                                         {teacher.image_url ? (
                                             <img src={teacher.image_url} alt={teacher.name} className="w-full h-full object-cover" />
                                         ) : (
-                                            <FaUserTie className="text-gray-400" />
+                                            <UserCog className="text-gray-400" size={20} />
                                         )}
                                     </div>
                                 </td>
                                 <td className="px-6 py-3 font-medium text-slate-800">{teacher.name}</td>
                                 <td className="px-6 py-3 text-sm text-slate-600">{teacher.designation}</td>
                                 <td className="px-6 py-3 text-right flex justify-end gap-3">
-                                    <button className="text-blue-600 hover:text-blue-800"><FaEdit /></button>
-                                    <button onClick={() => handleDelete(teacher.id)} className="text-red-600 hover:text-red-800"><FaTrash /></button>
+                                    <button onClick={() => handleEdit(teacher)} className="text-blue-600 hover:text-blue-800"><Edit size={18} /></button>
+                                    <button onClick={() => handleDelete(teacher.id)} className="text-red-600 hover:text-red-800"><Trash2 size={18} /></button>
                                 </td>
                             </tr>
                         ))}
@@ -151,7 +184,7 @@ export default function StaffPage() {
                 {loading && <div className="p-8 text-center text-slate-500">Loading faculty...</div>}
             </div>
 
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Staff Member">
+            <Modal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setEditingStaff(null); setNewStaff({ name: '', designation: '', image_url: '' }); }} title={editingStaff ? "Edit Staff Member" : "Add New Staff Member"}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-bold text-gray-700 mb-1">Full Name</label>

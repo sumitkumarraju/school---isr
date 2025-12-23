@@ -18,23 +18,30 @@ export default function EnquiryForm() {
             message: e.target.message.value,
         };
 
-        try {
-            const { error } = await supabase
-                .from('enquiries')
-                .insert([formData]);
+        console.log('Submitting enquiry:', formData);
 
-            if (!error) {
-                setStatus('success');
-                e.target.reset();
-                alert("Enquiry submitted successfully! Check your email for confirmation.");
-            } else {
+        try {
+            const { data, error } = await supabase
+                .from('enquiries')
+                .insert([formData])
+                .select();
+
+            if (error) {
+                console.error('Supabase error:', error);
                 setStatus('error');
-                alert("Something went wrong: " + error.message);
+                alert("Failed to submit enquiry: " + error.message + "\nPlease contact admin if this persists.");
+                return;
             }
+
+            console.log('Enquiry submitted successfully:', data);
+            setStatus('success');
+            e.target.reset();
+            alert("Thank you! Your enquiry has been submitted successfully. We will get back to you soon.");
+
         } catch (err) {
-            console.error(err);
+            console.error('Unexpected error:', err);
             setStatus('error');
-            alert("Failed to submit enquiry. Please try again.");
+            alert("An unexpected error occurred. Please try again or contact us directly.");
         } finally {
             setLoading(false);
         }

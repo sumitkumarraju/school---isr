@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { FaCloudUploadAlt, FaTrash, FaEye, FaFilePdf } from 'react-icons/fa';
 import Modal from '@/components/ui/Modal';
@@ -8,8 +8,9 @@ export default function PublicDisclosurePage() {
     const [docs, setDocs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newDoc, setNewDoc] = useState({ title: '', url: '' });
+    const [newDoc, setNewDoc] = useState({ title: '', file: null });
     const [submitting, setSubmitting] = useState(false);
+    const fileInputRef = useRef(null);
 
     useEffect(() => { fetchDocs(); }, []);
 
@@ -21,19 +22,45 @@ export default function PublicDisclosurePage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!newDoc.file) {
+            alert("Please select a PDF file");
+            return;
+        }
         setSubmitting(true);
 
-        const { data, error } = await supabase
-            .from('public_disclosures')
-            .insert([{ title: newDoc.title, file_url: newDoc.url }])
-            .select();
+        try {
+            // 1. Upload to Supabase Storage
+            const fileName = `${Date.now()}-${newDoc.file.name.replace(/\s/g, '-')}`;
+            const filePath = `disclosures/${fileName}`;
 
-        if (!error && data) {
-            setDocs([data[0], ...docs]);
-            setIsModalOpen(false);
-            setNewDoc({ title: '', url: '' });
-        } else {
-            alert("Failed to Add Document");
+            const { error: uploadError } = await supabase.storage
+                .from('gallery')
+                .upload(filePath, newDoc.file);
+
+            if (uploadError) throw uploadError;
+
+            // 2. Get Public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('gallery')
+                .getPublicUrl(filePath);
+
+            // 3. Insert into DB
+            const { data, error } = await supabase
+                .from('public_disclosures')
+                .insert([{ title: newDoc.title, file_url: publicUrl }])
+                .select();
+
+            if (!error && data) {
+                setDocs([data[0], ...docs]);
+                setIsModalOpen(false);
+                setNewDoc({ title: '', file: null });
+                if (fileInputRef.current) fileInputRef.current.value = '';
+            } else {
+                throw error;
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert("Failed to upload document: " + error.message);
         }
         setSubmitting(false);
     };
@@ -99,26 +126,31 @@ export default function PublicDisclosurePage() {
                             value={newDoc.title}
                             onChange={(e) => setNewDoc({ ...newDoc, title: e.target.value })}
                             className="w-full p-2 border rounded focus:ring-2 focus:ring-iis-navy outline-none"
-                            placeholder="e.g. Fees Structure 2025-26"
+                            placeholder="e.g. Mandatory Public Disclosure 2024-25"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-1">File URL (PDF)</label>
+                        <label className="block text-sm font-bold text-gray-700 mb-1">Choose PDF File from PC</label>
                         <input
+                            ref={fileInputRef}
                             required
-                            type="url"
-                            value={newDoc.url}
-                            onChange={(e) => setNewDoc({ ...newDoc, url: e.target.value })}
-                            className="w-full p-2 border rounded focus:ring-2 focus:ring-iis-navy outline-none"
-                            placeholder="https://..."
+                            type="file"
+                            accept=".pdf,application/pdf"
+                            onChange={(e) => setNewDoc({ ...newDoc, file: e.target.files?.[0] || null })}
+                            className="w-full p-2 border rounded focus:ring-2 focus:ring-iis-navy outline-none file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-iis-navy file:text-white hover:file:bg-slate-800 cursor-pointer"
                         />
+                        {newDoc.file && (
+                            <p className="text-xs text-slate-500 mt-1">
+                                Selected: {newDoc.file.name} ({(newDoc.file.size / 1024 / 1024).toFixed(2)} MB)
+                            </p>
+                        )}
                     </div>
                     <button
                         type="submit"
                         disabled={submitting}
                         className="w-full bg-iis-navy text-white font-bold py-2 rounded hover:bg-slate-800 disabled:opacity-50"
                     >
-                        {submitting ? 'Adding...' : 'Add Document'}
+                        {submitting ? 'Uploading...' : 'Upload Document'}
                     </button>
                 </form>
             </Modal>

@@ -1,6 +1,37 @@
-import React from 'react';
+'use client';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function PublicDisclosurePage() {
+    const [documents, setDocuments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchDocuments();
+    }, []);
+
+    const fetchDocuments = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('public_disclosures')
+                .select('*')
+                .order('uploaded_at', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching documents:', error);
+                setError(error.message);
+            } else {
+                setDocuments(data || []);
+            }
+        } catch (err) {
+            console.error('Unexpected error:', err);
+            setError('Failed to load documents');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="bg-slate-50 min-h-screen pb-20">
             <div className="bg-iis-navy text-white py-16 text-center">
@@ -13,24 +44,40 @@ export default function PublicDisclosurePage() {
                 <p className="text-slate-600 mb-8">
                     In compliance with CBSE norms, the mandatory public disclosure documents are available for viewing.
                 </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                    <a href="/public%20discloser/Affiliation.pdf" target="_blank" className="flex items-center p-4 border border-gray-200 bg-white rounded-sm hover:bg-iis-cream hover:border-iis-maroon transition-all group">
-                        <i className="fa-solid fa-file-pdf text-red-600 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
-                        <span className="font-bold text-slate-700">Affiliation Letter</span>
-                    </a>
-                    <a href="/public%20discloser/mandatory%20public%20disclosure.pdf" target="_blank" className="flex items-center p-4 border border-gray-200 bg-white rounded-sm hover:bg-iis-cream hover:border-iis-maroon transition-all group">
-                        <i className="fa-solid fa-file-pdf text-red-600 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
-                        <span className="font-bold text-slate-700">Public Disclosure</span>
-                    </a>
-                    <a href="/public%20discloser/Society%20Registration.pdf" target="_blank" className="flex items-center p-4 border border-gray-200 bg-white rounded-sm hover:bg-iis-cream hover:border-iis-maroon transition-all group">
-                        <i className="fa-solid fa-file-pdf text-red-600 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
-                        <span className="font-bold text-slate-700">Society Registration</span>
-                    </a>
-                    <a href="/public%20discloser/Fees%20Structure.pdf" target="_blank" className="flex items-center p-4 border border-gray-200 bg-white rounded-sm hover:bg-iis-cream hover:border-iis-maroon transition-all group">
-                        <i className="fa-solid fa-file-pdf text-red-600 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
-                        <span className="font-bold text-slate-700">Fee Structure PDF</span>
-                    </a>
-                </div>
+
+                {loading ? (
+                    <div className="py-12">
+                        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-iis-maroon"></div>
+                        <p className="text-slate-500 mt-4">Loading documents...</p>
+                    </div>
+                ) : error ? (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-red-700">
+                        <i className="fa-solid fa-exclamation-triangle text-2xl mb-2"></i>
+                        <p className="font-medium">Failed to load documents</p>
+                        <p className="text-sm mt-1">{error}</p>
+                    </div>
+                ) : documents.length === 0 ? (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-blue-700">
+                        <i className="fa-solid fa-info-circle text-3xl mb-3"></i>
+                        <p className="font-medium text-lg">No documents available at the moment</p>
+                        <p className="text-sm mt-2">Please check back later or contact the school office.</p>
+                    </div>
+                ) : (
+                    <div className="grid md:grid-cols-2 gap-4">
+                        {documents.map((doc) => (
+                            <a
+                                key={doc.id}
+                                href={doc.file_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center p-4 border border-gray-200 bg-white rounded-sm hover:bg-iis-cream hover:border-iis-maroon transition-all group"
+                            >
+                                <i className="fa-solid fa-file-pdf text-red-600 text-2xl mr-3 group-hover:scale-110 transition-transform"></i>
+                                <span className="font-bold text-slate-700">{doc.title}</span>
+                            </a>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { FaCloudUploadAlt, FaTrash, FaEdit, FaLayerGroup } from 'react-icons/fa';
+import { Upload, Trash2, Edit, Layers } from 'lucide-react';
 
 // Mock data until Supabase table 'hero_slides' is created
 const MOCK_SLIDES = [
@@ -134,7 +134,7 @@ export default function HeroManager() {
                     <p className="text-sm text-slate-500">Manage home page banner images and text.</p>
                 </div>
                 <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 bg-iis-navy text-white px-5 py-2 rounded shadow hover:bg-slate-800 transition">
-                    <FaCloudUploadAlt /> Add New Slide
+                    <Upload size={18} /> Add New Slide
                 </button>
             </div>
 
@@ -143,7 +143,7 @@ export default function HeroManager() {
                     <div key={slide.id} className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col md:flex-row h-auto md:h-48 group ${!slide.active ? 'opacity-60' : ''}`}>
                         <div className="w-full md:w-1/3 bg-gray-200 relative">
                             <div className="absolute inset-0 flex items-center justify-center text-gray-400 bg-cover bg-center" style={{ backgroundImage: `url(${slide.image_url})` }}>
-                                {!slide.image_url && <FaLayerGroup className="text-4xl" />}
+                                {!slide.image_url && <Layers className="text-4xl" size={40} />}
                             </div>
                             <div className={`absolute top-2 left-2 text-white text-xs px-2 py-1 rounded ${slide.active ? 'bg-green-600' : 'bg-red-500'}`}>
                                 {slide.active ? 'Active' : 'Inactive'}
@@ -159,7 +159,7 @@ export default function HeroManager() {
                                     {slide.active ? 'Deactivate' : 'Activate'}
                                 </button>
                                 <button onClick={() => handleDelete(slide.id)} className="px-4 py-2 bg-red-50 text-red-500 rounded hover:bg-red-100 font-medium text-sm flex items-center gap-2">
-                                    <FaTrash /> Remove
+                                    <Trash2 size={18} /> Remove
                                 </button>
                             </div>
                         </div>
