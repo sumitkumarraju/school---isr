@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function AdminLogin() {
     const [email, setEmail] = useState('');
@@ -28,6 +29,12 @@ export default function AdminLogin() {
             }
 
             if (data.success) {
+                if (data.session) {
+                    const { error: sessionError } = await supabase.auth.setSession(data.session);
+                    if (sessionError) {
+                        console.error('Failed to restore session:', sessionError);
+                    }
+                }
                 router.push('/admin/dashboard');
             }
         } catch (error) {
