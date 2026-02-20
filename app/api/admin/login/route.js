@@ -42,7 +42,7 @@ export async function POST(req) {
     }
 
     if (data.session) {
-        response = NextResponse.json({ success: true });
+        response = NextResponse.json({ success: true, session: data.session });
 
         // Set session cookies without maxAge (session cookie - dies on browser close)
         const cookieOptions = {

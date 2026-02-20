@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 import {
     LayoutDashboard,
     GraduationCap,
@@ -44,6 +45,7 @@ export default function AdminLayout({ children }) {
     }, [pathname]);
 
     const handleSignOut = async () => {
+        await supabase.auth.signOut();
         await fetch('/api/admin/logout', { method: 'POST' });
         router.push('/admin/login');
     };
